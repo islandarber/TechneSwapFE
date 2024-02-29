@@ -1,0 +1,103 @@
+/* Primary #6a0572
+Secondary button #f9a03f
+Accent active states for buttons : #3e8fb0
+backgroud: #f4f4f4
+text: #333333
+
+*/
+
+.LandingPageAll {
+  background-color: #3e8fb0;
+  
+}
+
+.LandingPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;  
+}
+
+.logoimg {
+    width: 150px;
+    /* z-index: -1; */
+
+}
+
+.titlepart {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  color: #333333;
+  
+}
+
+.titlepart h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.titlepart h2{
+  text-align: center;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.titlepart p {
+  text-align: center;
+  font-size: 1rem;
+  margin: 0;
+}
+
+
+
+.signupButton {
+  background-color: #f9a03f;
+  color: #333333;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 #969696;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.signupButton:active {
+  background-color: #6a0572;
+  color: #f4f4f4;
+}
+
+.normalButton {
+  background-color: #3e8fb0;
+  color: #f4f4f4;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 #969696;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.learnmoreButton {
+  background-color: #3e8fb0;
+  color: #333333;
+  color: white;
+  border: none;
+  padding: 0.2rem 0.7rem;
+  border-radius: 5px;
+  font-size: 0.6rem;
+  transition: background-color 0.3s;
+}
+
+.alreadyAccount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
