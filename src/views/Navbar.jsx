@@ -1,16 +1,40 @@
-import React from 'react'
-import {slide as Menu} from 'react-burger-menu'
-import { NavLink } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import techneSwapLogo from './TechneSwap-logos_transparentnew.png';
+import './Stylesheets/Navbar.css';
 
 export const Navbar = () => {
+  const Navigate = useNavigate();
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setMenuOpen(!isMenuOpen);
+  };
+
+  const handleLinkClick = (path) => {
+    // Close the menu when a link is clicked
+    setMenuOpen(false);
+    // Navigate to the specified path
+    Navigate(path);
+  };
 
   return (
-    <div>
-      <Menu>
-        <NavLink id="home" className="menu-item" to="/">Home</NavLink>
-        <NavLink id="about" className="menu-item" to="/discover">Discover</NavLink>
-        <NavLink id="contact" className="menu-item" to="/profile">Profile</NavLink>
-      </Menu>
+    <div className="navbar">
+      <img src={techneSwapLogo} alt="logologin" className="logoimg" />
+
+      <nav role='navigation'>
+        <div id="menuToggle">
+          <input type="checkbox" checked={isMenuOpen} onChange={handleMenuToggle} />
+          <span></span>
+          <span></span>
+          <span></span>
+          <ul id="menu">
+            <a onClick={() => handleLinkClick('/')}><li>Home</li></a>
+            <a onClick={() => handleLinkClick('/discover')}><li>Discover</li></a>
+            <a onClick={() => handleLinkClick('/profile')}><li>Profile</li></a>
+          </ul>
+        </div>
+      </nav>
     </div>
-  )
-}
+  );
+};
