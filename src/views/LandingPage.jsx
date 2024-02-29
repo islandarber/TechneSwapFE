@@ -9,7 +9,7 @@ export const LandingPage = () => {
   
   return (
     <div className={style.LandingPageAll}>
-    <div><img src={techneSwapLogo} alt="logo" className={style.logoimg}/></div>
+    {/* <div><img src={techneSwapLogo} alt="logo" className={style.logoimg}/></div> */}
     
     <div className={style.LandingPage}>
       
