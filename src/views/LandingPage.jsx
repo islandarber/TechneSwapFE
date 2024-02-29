@@ -16,7 +16,6 @@ export const LandingPage = () => {
       <div className={style.titlepart}>
         <h1>Welcome to TechneSwap!</h1>
         <h2>Unlock the Power of Exchange!</h2>
-        <button className={style.learnmoreButton} onClick={()=> navigate('/howto')}>Click me to learn more...</button>
         <p>
         Join us in a world where collaboration knows no bounds and where your skills find their perfect match!</p>
         
