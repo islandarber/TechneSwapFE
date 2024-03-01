@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import techneSwapLogo from './TechneSwap-logos_transparentnew.png';
+import techneSwapLogo from '../assets/TechneSwap-logos_transparentnew.png';
 import './Stylesheets/Navbar.css';
 
 export const Navbar = () => {
@@ -29,9 +29,9 @@ export const Navbar = () => {
           <span></span>
           <span></span>
           <ul id="menu">
-            <a onClick={() => handleLinkClick('/')}><li>Home</li></a>
-            <a onClick={() => handleLinkClick('/discover')}><li>Discover</li></a>
-            <a onClick={() => handleLinkClick('/profile')}><li>Profile</li></a>
+            <a onClick={() => isMenuOpen && handleLinkClick('/')}><li>Home</li></a>
+            <a onClick={() => isMenuOpen && handleLinkClick('/discover')}><li>Discover</li></a>
+            <a onClick={() => isMenuOpen && handleLinkClick('/')}><li>Logout</li></a>
           </ul>
         </div>
       </nav>

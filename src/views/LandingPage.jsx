@@ -1,6 +1,5 @@
 import React from 'react'
 import style from './Stylesheets/LandingPage.module.css'
-import techneSwapLogo from './TechneSwap-logos_transparentnew.png'
 import { useNavigate } from 'react-router-dom'
 
 export const LandingPage = () => {
