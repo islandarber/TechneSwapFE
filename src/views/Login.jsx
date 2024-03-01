@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import  style from './Stylesheets/Login.module.css'
-import logoimage from './TechneSwap-logos_transparentnew.png'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -50,7 +49,6 @@ export const Login = () => {
 
   return (
     <div className={style.loginPage}>
-      <img src={logoimage} alt="logologin" className={style.logoimg}/>
       {error && <p className={style.error}>{error.message}</p>}
       <form className={style.formlogin} onSubmit={handleSubmit}>
         <label>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import style from './Stylesheets/Register.module.css'
-import logoimage from './TechneSwap-logos_transparentnew.png'
+import logoimage from '../assets/TechneSwap-logos_transparentnew.png'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import toast, {Toaster} from 'react-hot-toast'
