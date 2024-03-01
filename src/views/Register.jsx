@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import style from './Stylesheets/Register.module.css'
-import logoimage from '../assets/TechneSwap-logos_transparentnew.png'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import toast, {Toaster} from 'react-hot-toast'
@@ -57,7 +56,6 @@ export const Register = () => {
 
   return (
     <div className={style.signupPage}>
-      <img src={logoimage} alt="logologin" className={style.logoimg}/>
       <h1>Create an account with us:</h1>
       {error && <p className={style.errormessage}>{error && error}</p>}
       <form className={style.signupForm} onSubmit={handleSubmit}>

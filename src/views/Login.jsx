@@ -64,9 +64,9 @@ export const Login = () => {
         <button type="submit" value="Login" className={style.loginbutton}>Login</button>
       </form>
     
+ 
       <div className={style.acountYet}>
-        <p>Not an acount yet?</p>
-        <button onClick={() => Navigate('/register')} className={style.signupbutton}>Sign Up here!</button>
+        <p>Not an acount yet? <a onClick={() => Navigate('/register')}>Sign Up here!</a></p>
       </div>
       
 

@@ -86,4 +86,10 @@
   justify-content: center;
 }
 
+.acountYet a{
+  color: #3e8fb0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 
