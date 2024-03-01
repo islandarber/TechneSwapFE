@@ -5,6 +5,8 @@ import { Login } from './views/Login'
 import { Register } from './views/Register'
 import { Discover } from './views/Discover'
 import { Navbar } from './views/Navbar'
+import Footer from './views/Footer'
+import { UserProfil } from './views/UserProfil'
 
 
 function App() {
@@ -17,8 +19,11 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/discover" element={<Discover />} />
-      
      </Routes>
+      <Footer />
+      <Routes>
+        <Route path="/:id" element={<UserProfil />} />
+      </Routes>
     </>
   )
 }

@@ -1,7 +1,4 @@
-body
-{
-  overflow-x: hidden; /* needed because hiding the menu on the right side is not perfect,  */
-}
+
 /*
  * Made by Erik Terwan
  * 24th of November 2015
@@ -169,10 +166,10 @@ body
 
  #menu {
   position: absolute;
-  width: 150px;
+  width: 90px;
   margin-top: 20px; /* Adjust the margin-top as needed */
   padding: 50px;
-  right: -100px;
+  right: 0;
   border-radius: 10px;
   background: #3e8fb0;
   list-style-type: none;
