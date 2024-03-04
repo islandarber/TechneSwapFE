@@ -19,11 +19,9 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/discover" element={<Discover />} />
+      <Route path=":id" element={<UserProfil />} />
      </Routes>
       <Footer />
-      <Routes>
-        <Route path="/:id" element={<UserProfil />} />
-      </Routes>
     </>
   )
 }
