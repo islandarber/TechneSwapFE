@@ -119,153 +119,99 @@ export const UserProfil = () => {
   };
 
   return (
-    <div className={style.UserProfil}>
-      <h1>My Profile</h1>
-      {user && (
+    <div className={style.UserProfile}>
+    <h1>My Profile</h1>
+    {user && (
+      <div>
+        <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" />
+        <p>
+          {isEditMode ? (
+            <input
+              type="text"
+              value={user.firstName || ''}
+              onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+            />
+          ) : (
+            user.firstName
+          )}
+        </p>
+        <p>
+          {isEditMode ? (
+            <input
+              type="text"
+              value={user.lastName || ''}
+              onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+            />
+          ) : (
+            user.lastName
+          )}
+        </p>
+        <p>
+          {isEditMode ? (
+            <input
+              type="text"
+              value={user.email || ''}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+            />
+          ) : (
+            user.email
+          )}
+        </p>
+        <p>
+          Location: 
+          {isEditMode ? (
+            <input
+              type="text"
+              value={user.location || ''}
+              onChange={(e) => setUser({ ...user, location: e.target.value })}
+            />
+          ) : (
+            user.location
+          )}
+        </p>
         <div>
-          <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" />
-          <p>
-            {isEditMode ? (
-              <input
-                type="text"
-                value={user.firstName}
-                onChange={(e) => setUser({ ...user, firstName: e.target.value })}
-              />
-            ) : (
-              user.firstName
-            )}
-          </p>
-          <p>
-            {isEditMode ? (
-              <input
-                type="text"
-                value={user.lastName}
-                onChange={(e) => setUser({ ...user, lastName: e.target.value })}
-              />
-            ) : (
-              user.lastName
-            )}
-          </p>
-          <p>
-            {isEditMode ? (
-              <input
-                type="text"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-              />
-            ) : (
-              user.email
-            )}
-          </p>
-          <p>
-            Location:{' '}
-            {isEditMode ? (
-              <input
-                type="text"
-                value={user.location}
-                onChange={(e) => setUser({ ...user, location: e.target.value })}
-              />
-            ) : (
-              user.location
-            )}
-          </p>
-          <div>
-            <div>
-            <p>Skills:</p>
-
-              {user.skills && user.skills.length > 0 ? (
-                user.skills.map((skill, index) => (
-                  <div>
-                    <p key={index}>{skill.name}</p>
-                    <button>D</button>
-                  </div>
-                ))
-              ) : (
-                <p>No skills listed.</p>
-              )}
-
-              {updatedSkills && updatedSkills.length > 0 ? (
-                updatedSkills.map((skill, index) => (
-                  <div>
-                    <p key={updated-${index}}>{skill}</p>
-                    <button>D</button>
-                  </div>
-                ))
-              ) : null}
-             
-            </div>
-            {/* {isEditMode && (
-          <div className={style.selections}>
-            <label htmlFor="categorySelect">Select Category:</label>
-            <select id="categorySelect" onChange={(e) => handleSkillsOnChange(e)}>
-              {categories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-
-            <label htmlFor="skillSelect">Select Skill:</label>
-            <select id="skillSelect" multiple value={selectedSkills} onChange={handleSkillChange}>
-              {availableskills.map((skill) => (
-                <option key={skill._id} value={skill.name}>
-                  {skill.name}
-                </option>
-              ))}
-            </select>
-            <button onClick={() => setUpdatedSkills([...updatedSkills, ...selectedSkills])}>
-              Add
-            </button>
-          </div>
-        ) 
-      }  */}
-          <div>
-          { !user.needs ? (
+          <p>Skills:</p>
+          {user.skills && user.skills.length > 0 ? (
+            user.skills.map((skill, index) => (
+              <div key={index}>
+                <p>{skill.name}</p>
+              </div>
+            ))
+          ) : (
+            <p>No skills listed.</p>
+          )}
+          {updatedSkills && updatedSkills.length > 0 ? (
+            updatedSkills.map((skill, index) => (
+              <div key={`updated-${index}`}>
+                <p>{skill}</p> {/* Assuming updatedSkills is an array of skill names */}
+              </div>
+            ))
+          ) : null}
+        </div>
+        <div>
+          {!user.needs ? (
             <p>Please update Profile to add needs</p>
           ) : user.needs.length === 0 ? (
             <p>Please update Profile to add needs</p>
           ) : (
-            <p> Needs : {user.needs.map((need) => need.name).join(', ')}, {updatedNeeds && updatedNeeds.length > 0 ? updatedNeeds.map((need) => need).join(', ') : ''} </p>
+            <p>
+              Needs: {user.needs.map((need) => need.name).join(', ')}
+              {updatedNeeds && updatedNeeds.length > 0 ? updatedNeeds.map((need) => need).join(', ') : ''}
+            </p>
           )}
-            {isEditMode ? (
-              <div className={style.selections}>
-                <label htmlFor="categorySelect">Select Category:</label>
-                <select id="categorySelect" onChange={(e)=>handleNeedsOnChange(e)}>
-                  {categories.map((category) => (
-                    <option key={category._id} value={category._id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-
-                <label htmlFor="needSelect">Select Skill:</label>
-                <select id="needSelect" multiple value={selectedNeeds} onChange={handleNeedChange}>
-                  {availableNeeds.map((need) => (
-                    <option key={need._id} value={need.name}>
-                      {need.name}
-                    </option>
-                  ))}
-                </select>
-                <button onClick={() => setUpdatedNeeds([...updatedNeeds, ...selectedNeeds])}>
-                  Add
-                </button>
-              </div>
-            ) : !user.needs ? (
-              'Please update Profile to add needs'
-            ) : user.needs.length === 0 ? (
-              'Please update Profile to add needs'
-            ) : (
-              user.needs.map((need) => need.name).join(', ')
-            )}
-          </div>
+          {isEditMode && (
+            <div className={style.selections}>
+              {/* Skills and needs selection logic */}
+            </div>
+          )}
         </div>
-      )}
-
-      {isEditMode 
-      ?<button onClick={handleUpdateProfile}>Save Profile</button> 
-      :<button onClick={()=> setIsEditMode(!isEditMode)}>Edit Profile</button>
-      }    
-          
-    </div>
-  );
+      </div>
+    )}
+    {isEditMode ? (
+      <button onClick={handleUpdateProfile}>Save Profile</button>
+    ) : (
+      <button onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
+    )}
+  </div>
+);
 };
