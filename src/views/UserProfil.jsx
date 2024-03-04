@@ -10,12 +10,11 @@ export const UserProfil = () => {
   const [updatedSkills, setUpdatedSkills] = useState([]);              
   const [updatedNeeds, setUpdatedNeeds] = useState([]);
 
+  const [availableSkills, setAvailableSkills] = useState([]);
+  const [availableNeeds, setAvailableNeeds] = useState([]);
+
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [selectedNeeds, setSelectedNeeds] = useState([]);
-
-
-  const [availableskills, setAvailableSkills] = useState([]);
-  const [availableNeeds, setAvailableNeeds] = useState([]);
 
 
   const [error, setError] = useState(null);
@@ -46,19 +45,153 @@ export const UserProfil = () => {
     };
   
     fetchData();
-  }, [id, isEditMode]); // Include isEditMode in the dependency array
+  }, []); // Include isEditMode in the dependency array
   
 
+
+
+  const handleSkillsBasedOnCat = async (e) => {
+    try {
+      const skillsResponse = await axios.get(`http://localhost:8000/skills/${e.target.value}`);
+      setAvailableSkills(skillsResponse.data);
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data);
+      } else if (error.request) {
+        setError('No response received');
+      } else {
+        console.error('Error setting up the request', error.message);
+      }
+    }
+  };
+
+  const handleNeedsBasedOnCat = async (e) => {
+    try {
+      const needsResponse = await axios.get(`http://localhost:8000/skills/${e.target.value}`);
+      setAvailableNeeds(needsResponse.data);
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data);
+      } else if (error.request) {
+        setError('No response received');
+      } else {
+        console.error('Error setting up the request', error.message);
+      }
+    }
+
+  };
+  
+
+
+  const handleSelectedSkillsChange = (e) => {
+    setSelectedSkills(Array.from(e.target.selectedOptions, (option) => option.value));
+  };
+
+  const handleSelectedNeedChange = (e) => {
+    setSelectedNeeds(Array.from(e.target.selectedOptions, (option) => option.value));
+  }  
+
+  const handleUpdateSkills = () => {
+    setUser((prevUser) => {
+      const updatedUserSkills = [...prevUser.skills];
+  
+      updatedSkills.forEach((updatedSkill) => {
+        const existingSkillIndex = updatedUserSkills.findIndex(
+          (userSkill) => userSkill.name === updatedSkill
+        );
+  
+        if (existingSkillIndex !== -1) {
+          // Update the existing skill with the new data
+          updatedUserSkills[existingSkillIndex] = availableSkills.find(
+            (availableSkill) => availableSkill.name === updatedSkill
+          );
+        } else {
+          // Skill not found, add it to the array
+          updatedUserSkills.push(
+            availableSkills.find((availableSkill) => availableSkill.name === updatedSkill)
+          );
+        }
+      });
+
+      const uniqueUserSkills = Array.from(new Set(updatedUserSkills.map(skill => skill.name)))
+      .map(name => updatedUserSkills.find(skill => skill.name === name));
+  
+      return {
+        ...prevUser,
+        skills: uniqueUserSkills,
+      };
+    });
+  
+    setUpdatedSkills([]);
+  };
+
+  const handleUpdateNeeds = () => {
+    setUser((prevUser) => {
+      const updatedUserNeeds = [...prevUser.needs];
+  
+      updatedNeeds.forEach((updatedNeed) => {
+        const existingNeedIndex = updatedUserNeeds.findIndex(
+          (userNeed) => userNeed.name === updatedNeed
+        );
+  
+        if (existingNeedIndex !== -1) {
+          // Update the existing Need with the new data
+          updatedUserNeeds[existingNeedIndex] = availableNeeds.find(
+            (availableNeed) => availableNeed.name === updatedNeed
+          );
+        } else {
+          // Need not found, add it to the array
+          updatedUserNeeds.push(
+            availableNeeds.find((availableNeed) => availableNeed.name === updatedNeed)
+          );
+        }
+      });
+  
+      return {
+        ...prevUser,
+        needs: updatedUserNeeds,
+      };
+    });
+  
+    setUpdatedNeeds([]);
+  };
+  
+  
+
+  const handleNeedChange = (e) => {
+    setSelectedNeeds(Array.from(e.target.selectedOptions, (option) => option.value));
+  };
+
+  const handleDeleteSkillAl = (skill) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      skills: prevUser.skills.filter((s) => s.name !== skill.name),
+    }));
+  };
+
+  const handleDeleteSkillUp = (skill) => {
+    setUpdatedSkills(updatedSkills.filter((s) => s !== skill));
+  };
+
+  const handleDeleteNeedAl = (need) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      needs: prevUser.needs.filter((n) => n.name !== need.name),
+    }));
+  };
+
+  const handleDeleteNeedUp = (need) => {
+    setUpdatedNeeds(updatedNeeds.filter((n) => n !== need));
+  };
+
+
+
   const handleUpdateProfile = () => {
-    setUpdatedUser((prevUpdatedUser) => ({
-      ...prevUpdatedUser,
-      skills: updatedSkills,
-      needs: updatedNeeds,
-    }))
+
+
       const updatedUser = async () => {
         try {
-          const response = await axios.put(`http://localhost:8000/users/${id}`, user);
-          setUser(response.data);
+          const response = await axios.put(`http://localhost:8000/users/update/${id}`, user);
           console.log('User response', response.data);
         } catch (error) {
           if (error.response) {
@@ -77,46 +210,6 @@ export const UserProfil = () => {
 
 
 
-  const handleSkillsOnChange = async (e) => {
-    try {
-      const skillsResponse = await axios.get(`http://localhost:8000/skills/${e.target.value}`);
-      setAvailableSkills(skillsResponse.data);
-    } catch (error) {
-      if (error.response) {
-        setError(error.response.data);
-      } else if (error.request) {
-        setError('No response received');
-      } else {
-        console.error('Error setting up the request', error.message);
-      }
-    }
-  };
-
-  const handleNeedsOnChange = async (e) => {
-    try {
-      const needsResponse = await axios.get(`http://localhost:8000/skills/${e.target.value}`);
-      setAvailableNeeds(needsResponse.data);
-    } catch (error) {
-      if (error.response) {
-        setError(error.response.data);
-      } else if (error.request) {
-        setError('No response received');
-      } else {
-        console.error('Error setting up the request', error.message);
-      }
-    }
-
-  };
-  
-
-
-  const handleSkillChange = (e) => {
-    setSelectedSkills(Array.from(e.target.selectedOptions, (option) => option.value));
-  };
-
-  const handleNeedChange = (e) => {
-    setSelectedNeeds(Array.from(e.target.selectedOptions, (option) => option.value));
-  };
 
   return (
     <div className={style.UserProfile}>
@@ -169,41 +262,103 @@ export const UserProfil = () => {
             user.location
           )}
         </p>
-        <div>
-          <p>Skills:</p>
-          {user.skills && user.skills.length > 0 ? (
-            user.skills.map((skill, index) => (
-              <div key={index}>
-                <p>{skill.name}</p>
-              </div>
-            ))
-          ) : (
-            <p>No skills listed.</p>
-          )}
-          {updatedSkills && updatedSkills.length > 0 ? (
-            updatedSkills.map((skill, index) => (
-              <div key={`updated-${index}`}>
-                <p>{skill}</p> {/* Assuming updatedSkills is an array of skill names */}
-              </div>
-            ))
-          ) : null}
-        </div>
-        <div>
-          {!user.needs ? (
-            <p>Please update Profile to add needs</p>
-          ) : user.needs.length === 0 ? (
-            <p>Please update Profile to add needs</p>
-          ) : (
-            <p>
-              Needs: {user.needs.map((need) => need.name).join(', ')}
-              {updatedNeeds && updatedNeeds.length > 0 ? updatedNeeds.map((need) => need).join(', ') : ''}
-            </p>
-          )}
-          {isEditMode && (
+
+
+        <div className={style.skillsAndNeeds___Display}>
+          
+          <div className={style.skill__Display}>
+            <p>Skills:</p>
+            {user.skills && user.skills.length > 0 ? (
+              user.skills.map((skill, index) => (
+                <div key={index} className={style.individualSkill}>
+                  <p>{skill.name}</p>
+                  {isEditMode && <button onClick={() => handleDeleteSkillAl(skill)} className={style.deleteBTn}>🗑️</button>}
+                </div>
+              ))
+            ) : (
+              <p>{!selectedSkills ? 'No skills listed.' : null}</p>
+            )}
+            {updatedSkills && updatedSkills.length > 0 ? (
+              updatedSkills.map((skill, index) => (
+                <div key={`updated-${index}`} className={style.individualSkill}>
+                  <p>A{skill}</p> {/* Assuming updatedSkills is an array of skill names */}
+                  {isEditMode && <button onClick={() => handleDeleteSkillUp(skill)} className={style.deleteBTn}>🗑️</button>}
+                </div>
+              ))
+            ) : null}
+                {isEditMode && (
             <div className={style.selections}>
-              {/* Skills and needs selection logic */}
+              <label htmlFor="categorySelect">Select Category:</label>
+              <select id="categorySelect" onChange={(e) => handleSkillsBasedOnCat(e)}>
+              <option value="" disabled selected>Category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="skillSelect">Select Skill:</label>
+              <select id="skillSelect" multiple value={selectedSkills} onChange={handleSelectedSkillsChange}>
+                {availableSkills.map((skill) => (
+                  <option key={skill._id} value={skill.name}>
+                    {skill.name}
+                  </option>
+                ))}
+              </select>
+              <button onClick={() => setUpdatedSkills([...updatedSkills, ...selectedSkills])}>
+                +
+              </button>
+              <button onClick={handleUpdateSkills}>Update Skills</button>
             </div>
-          )}
+          ) 
+                }
+          </div>
+          <div className={style.skill__Display}>
+          <p>Needs:</p>
+            {user.needs && user.needs.length > 0 ? (
+              user.needs.map((need, index) => (
+                <div key={index} className={style.individualSkill}>
+                  <p>{need.name}</p>
+                  {isEditMode && <button onClick={() => handleDeleteNeedAl(need)} className={style.deleteBTn}>🗑️</button>}
+                </div>
+              ))
+            ) : (
+              <p>{!selectedSkills ? 'No skills listed.' : null}</p>
+            )}
+            {updatedNeeds && updatedNeeds.length > 0 ? (
+              updatedNeeds.map((need, index) => (
+                <div key={`updated-${index}`} className={style.individualSkill}>
+                  <p>A{need}</p>
+                  {isEditMode && <button onClick={() => handleDeleteNeedUp(need)} className={style.deleteBTn}>🗑️</button>}
+                </div>
+              ))
+            ) : null}
+            {isEditMode && (
+              <div className={style.selections}>
+               <label htmlFor="categorySelect">Select Category:</label>
+              <select id="categorySelect" onChange={(e) => handleNeedsBasedOnCat(e)}>
+              <option value="" disabled selected>Category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="needSelect">Select Need:</label>
+              <select id="needSelect" multiple value={selectedNeeds} onChange={handleSelectedNeedChange}>
+                {availableNeeds.map((need) => (
+                  <option key={need._id} value={need.name}>
+                    {need.name}
+                  </option>
+                ))}
+              </select>
+              <button onClick={() => setUpdatedNeeds([...updatedNeeds, ...selectedNeeds])}>
+                +
+              </button>
+              <button onClick={handleUpdateNeeds}>Update Needs</button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     )}

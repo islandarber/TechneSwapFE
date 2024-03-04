@@ -6,9 +6,46 @@
   margin: 20px;
 }
 
+.UserProfile h1 {
+  font-size: 1rem;
+  color: #3e8fb0;
+}
+
+.UserProfile p{
+  font-size: 0.7rem;
+  color: #eb9500;
+}
+
+.UserProfile button {
+  width: 50%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3e8fb0;
+  color: white;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.deleteBTn {
+  border: none !important;
+  background-color: rgb(247, 245, 245) !important;
+}
+
+.UserProfile label {
+  font-size: 0.7rem;
+  color: #3e8fb0;
+}
+
 
 .UserProfile img{
-  width: 100px;
+  width: 80px;
+}
+
+.skillsAndNeeds___Display{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .selections {
@@ -17,10 +54,29 @@
 }
 
 .selections select {
-  width: 30%;
-  height: 100%;
+  width: 100%;
+  padding: 5px;
   border: none;
   border-radius: 5px;
   background-color: #f5f5f5;
   box-shadow: 0 0 5px 0 #3e8fb0;
+  font-size: 0.5rem;
+}
+
+
+
+.skill__Display {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.individualSkill {
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  align-items: center;
+  font-size: 0.7rem;
+  border: #3e8fb0 1px solid;
+  border-radius: 50px;
 }
