@@ -170,16 +170,31 @@ export const UserProfil = () => {
             )}
           </p>
           <div>
-            { !user.skills ? (
-            <p>Please update Profile to add skills</p>
-          ) : user.skills.length === 0 ? (
-            <p>Please update Profile to add skills</p>
-          ) : (
-            <p> Skills : {user.skills.map((skill) =>
-              {<p> {skill.name} </p>}
-            ).join(', ')}, {updatedSkills && updatedSkills.length > 0 ? updatedSkills.map((skill) => skill).join(', ') : ''} </p>
-          )}
-            {isEditMode && (
+            <div>
+            <p>Skills:</p>
+
+              {user.skills && user.skills.length > 0 ? (
+                user.skills.map((skill, index) => (
+                  <div>
+                    <p key={index}>{skill.name}</p>
+                    <button>D</button>
+                  </div>
+                ))
+              ) : (
+                <p>No skills listed.</p>
+              )}
+
+              {updatedSkills && updatedSkills.length > 0 ? (
+                updatedSkills.map((skill, index) => (
+                  <div>
+                    <p key={updated-${index}}>{skill}</p>
+                    <button>D</button>
+                  </div>
+                ))
+              ) : null}
+             
+            </div>
+            {/* {isEditMode && (
           <div className={style.selections}>
             <label htmlFor="categorySelect">Select Category:</label>
             <select id="categorySelect" onChange={(e) => handleSkillsOnChange(e)}>
@@ -203,8 +218,7 @@ export const UserProfil = () => {
             </button>
           </div>
         ) 
-      } 
-    </div>
+      }  */}
           <div>
           { !user.needs ? (
             <p>Please update Profile to add needs</p>
