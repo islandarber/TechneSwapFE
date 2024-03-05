@@ -23,6 +23,17 @@ export const UserProfil = () => {
 
   const { id } = useParams();
 
+
+  const [userData, setUserData] = useState({
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
+    email: user.email || '',
+    location: user.location ||'',
+    img: user.img ||'',
+    skills: user.skills || [],
+    needs: user.needs || [],
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,10 +56,16 @@ export const UserProfil = () => {
     };
   
     fetchData();
-  }, []); // Include isEditMode in the dependency array
+  }, []); 
   
 
-
+ const handleChange = (e) => {
+  const {name, value} = e.target;
+  setUserData((prevData) => ({
+    ...prevData,
+    [name]: name === 'img' ? e.target.files[0] : value,
+  }));
+ };
 
   const handleSkillsBasedOnCat = async (e) => {
     try {
@@ -158,10 +175,6 @@ export const UserProfil = () => {
   
   
 
-  const handleNeedChange = (e) => {
-    setSelectedNeeds(Array.from(e.target.selectedOptions, (option) => option.value));
-  };
-
   const handleDeleteSkillAl = (skill) => {
     setUser((prevUser) => ({
       ...prevUser,
@@ -185,9 +198,16 @@ export const UserProfil = () => {
   };
 
 
+  const handleImgChange = (e) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      img: e.target.files[0],
+    }));
+  };
+
 
   const handleUpdateProfile = () => {
-
+    console.log('User', user);
 
       const updatedUser = async () => {
         try {
@@ -208,6 +228,8 @@ export const UserProfil = () => {
 
   };
 
+  
+
 
 
 
@@ -216,13 +238,14 @@ export const UserProfil = () => {
     <h1>My Profile</h1>
     {user && (
       <div>
-        <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" />
+         {user.img ?  <img src={user.img} alt={user.name} width={200} className={img} /> : <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" />}
         <p>
+          {isEditMode && <input name="img" type="file" onChange={handleChange} />}
           {isEditMode ? (
             <input
               type="text"
-              value={user.firstName || ''}
-              onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+              value={user.firstName}
+              onChange={(e) => handleChange(e)}
             />
           ) : (
             user.firstName
@@ -244,7 +267,7 @@ export const UserProfil = () => {
             <input
               type="text"
               value={user.email || ''}
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              onChange={handleChange}
             />
           ) : (
             user.email
@@ -256,7 +279,7 @@ export const UserProfil = () => {
             <input
               type="text"
               value={user.location || ''}
-              onChange={(e) => setUser({ ...user, location: e.target.value })}
+              onChange={handleChange}
             />
           ) : (
             user.location
