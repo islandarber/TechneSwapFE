@@ -24,14 +24,12 @@ export const UserProfil = () => {
   const { id } = useParams();
 
 
-  const [userData, setUserData] = useState({
+  const [formData, setFormData] = useState({
     firstName: user.firstName || '',
     lastName: user.lastName || '',
     email: user.email || '',
     location: user.location ||'',
     img: user.img ||'',
-    skills: user.skills || [],
-    needs: user.needs || [],
   });
 
   useEffect(() => {
@@ -39,6 +37,7 @@ export const UserProfil = () => {
       try {
         const response = await axios.get(`http://localhost:8000/users/${id}`);
         setUser(response.data);
+        console.log('User response', response.data);
   
         const categoriesResponse = await axios.get('http://localhost:8000/categories');
         setCategories(categoriesResponse.data);
@@ -61,7 +60,7 @@ export const UserProfil = () => {
 
  const handleChange = (e) => {
   const {name, value} = e.target;
-  setUserData((prevData) => ({
+  setFormData((prevData) => ({
     ...prevData,
     [name]: name === 'img' ? e.target.files[0] : value,
   }));
@@ -178,40 +177,78 @@ export const UserProfil = () => {
   const handleDeleteSkillAl = (skill) => {
     setUser((prevUser) => ({
       ...prevUser,
-      skills: prevUser.skills.filter((s) => s.name !== skill.name),
+      skills: prevUser.skills.filter((s) => s._id !== skill._id),
     }));
   };
 
   const handleDeleteSkillUp = (skill) => {
-    setUpdatedSkills(updatedSkills.filter((s) => s !== skill));
+    const skillId = availableSkills.find((updatedSkill) => updatedSkill._id === skill)._id;
+    setUpdatedSkills((prevSkills) => prevSkills.filter((s) => s !== skillId));
   };
+  
+
 
   const handleDeleteNeedAl = (need) => {
     setUser((prevUser) => ({
       ...prevUser,
-      needs: prevUser.needs.filter((n) => n.name !== need.name),
+      needs: prevUser.needs.filter((n) => n._id !== need._id),
     }));
   };
 
   const handleDeleteNeedUp = (need) => {
-    setUpdatedNeeds(updatedNeeds.filter((n) => n !== need));
+    setUpdatedNeeds(updatedNeeds.filter((n) => n !== need._id));
   };
 
 
-  const handleImgChange = (e) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      img: e.target.files[0],
-    }));
-  };
 
 
   const handleUpdateProfile = () => {
-    console.log('User', user);
+
+     const newFormData = new FormData();
+
+      if (formData.img) {
+      newFormData.append('img', formData.img);
+      } else {
+        newFormData.append('img', user.img);
+      }
+
+      if (formData.firstName) {
+      newFormData.append('firstName', formData.firstName);
+      } else {
+        newFormData.append('firstName', user.firstName);
+      }
+
+      if (formData.lastName) {
+      newFormData.append('lastName', formData.lastName);
+      } else {
+        newFormData.append('lastName', user.lastName);
+      }
+
+      if (formData.email) {
+      newFormData.append('email', formData.email);
+      } else {
+        newFormData.append('email', user.email);
+      }
+
+      if (formData.location) {
+      newFormData.append('location', formData.location);
+      } else {
+        newFormData.append('location', user.location);
+      }
+
+      newFormData.append('skills', user.skills)
+      newFormData.append('needs', user.needs)
+
+
 
       const updatedUser = async () => {
         try {
-          const response = await axios.put(`http://localhost:8000/users/update/${id}`, user);
+          const response = await axios.put(`http://localhost:8000/users/update/${id}`, newFormData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          
+          });
           console.log('User response', response.data);
         } catch (error) {
           if (error.response) {
@@ -238,53 +275,39 @@ export const UserProfil = () => {
     <h1>My Profile</h1>
     {user && (
       <div>
-         {user.img ?  <img src={user.img} alt={user.name} width={200} className={img} /> : <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" />}
-        <p>
-          {isEditMode && <input name="img" type="file" onChange={handleChange} />}
-          {isEditMode ? (
+        {isEditMode ? (
+          <form action="">
+            <input type="file" name="img" onChange={handleChange} />
             <input
-              type="text"
-              value={user.firstName}
-              onChange={(e) => handleChange(e)}
-            />
-          ) : (
-            user.firstName
-          )}
-        </p>
-        <p>
-          {isEditMode ? (
+                type="text"
+                defaultValue={user.firstName}
+                onChange={handleChange}
+              />
             <input
-              type="text"
-              value={user.lastName || ''}
-              onChange={(e) => setUser({ ...user, lastName: e.target.value })}
-            />
-          ) : (
-            user.lastName
-          )}
-        </p>
-        <p>
-          {isEditMode ? (
+                type="text"
+                defaultValue={user.lastName }
+                onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+              />
             <input
-              type="text"
-              value={user.email || ''}
-              onChange={handleChange}
-            />
-          ) : (
-            user.email
-          )}
-        </p>
-        <p>
-          Location: 
-          {isEditMode ? (
+                type="text"
+                defaultValue={user.email}
+                onChange={handleChange}
+              />
             <input
-              type="text"
-              value={user.location || ''}
-              onChange={handleChange}
-            />
-          ) : (
-            user.location
-          )}
-        </p>
+                type="text"
+                defaultValue={user.location}
+                onChange={handleChange}
+              />
+          </form>
+        ) : (
+          <div>
+            <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" />
+            <p>{user.firstName}</p>
+            <p>{user.lastName}</p>
+            <p>{user.email}</p>
+            <p>{user.location}</p>
+          </div>
+        )}
 
 
         <div className={style.skillsAndNeeds___Display}>
@@ -304,7 +327,7 @@ export const UserProfil = () => {
             {updatedSkills && updatedSkills.length > 0 ? (
               updatedSkills.map((skill, index) => (
                 <div key={`updated-${index}`} className={style.individualSkill}>
-                  <p>A{skill}</p> {/* Assuming updatedSkills is an array of skill names */}
+                  <p>{availableSkills.find((availableSkill) => availableSkill._id === skill).name}</p>
                   {isEditMode && <button onClick={() => handleDeleteSkillUp(skill)} className={style.deleteBTn}>🗑️</button>}
                 </div>
               ))
@@ -323,7 +346,7 @@ export const UserProfil = () => {
               <label htmlFor="skillSelect">Select Skill:</label>
               <select id="skillSelect" multiple value={selectedSkills} onChange={handleSelectedSkillsChange}>
                 {availableSkills.map((skill) => (
-                  <option key={skill._id} value={skill.name}>
+                  <option key={skill._id} value={skill._id}>
                     {skill.name}
                   </option>
                 ))}
@@ -351,7 +374,7 @@ export const UserProfil = () => {
             {updatedNeeds && updatedNeeds.length > 0 ? (
               updatedNeeds.map((need, index) => (
                 <div key={`updated-${index}`} className={style.individualSkill}>
-                  <p>A{need}</p>
+                  <p>{availableNeeds.find((availableNeed) => availableNeed._id === need).name}</p>
                   {isEditMode && <button onClick={() => handleDeleteNeedUp(need)} className={style.deleteBTn}>🗑️</button>}
                 </div>
               ))
@@ -370,7 +393,7 @@ export const UserProfil = () => {
               <label htmlFor="needSelect">Select Need:</label>
               <select id="needSelect" multiple value={selectedNeeds} onChange={handleSelectedNeedChange}>
                 {availableNeeds.map((need) => (
-                  <option key={need._id} value={need.name}>
+                  <option key={need._id} value={need._id}>
                     {need.name}
                   </option>
                 ))}
