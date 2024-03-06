@@ -1,0 +1,71 @@
+.discoverViewAll {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.discoverViewAll h1 {
+  font-size: 2rem;
+  text-align: center;
+  color: #3e8fb0;
+}
+
+.discoverViewAll form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 50%;
+  font-size: 0.7rem;
+}
+
+.discoverViewAll form select {
+  width: 50%;
+}
+
+.discoverViewAll form input {
+  width: 50%;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f7f5f5;
+  box-shadow: 0 0 5px 0 #3e8fb0;
+  text-align: center;
+}
+
+.discoverViewAll form button[type="submit"] {
+  width: 50%;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3e8fb0;
+  color: white;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.category__selector {
+  display: flex;
+  flex-direction: column;
+}
+
+.category__selector select {
+  width: 50%;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f7f5f5;
+  box-shadow: 0 0 5px 0 #3e8fb0;
+  text-align: center;
+}
+
+.radio__selectors {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
