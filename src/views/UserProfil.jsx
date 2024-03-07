@@ -10,6 +10,8 @@ export const UserProfil = () => {
   const [updatedSkills, setUpdatedSkills] = useState([]);              
   const [updatedNeeds, setUpdatedNeeds] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   const [availableSkills, setAvailableSkills] = useState([]);
   const [availableNeeds, setAvailableNeeds] = useState([]);
 
@@ -61,6 +63,8 @@ export const UserProfil = () => {
         } else {
           console.error('Error setting up the request', error.message);
         }
+      }finally {
+        setLoading(false);
       }
     };
   
@@ -70,7 +74,7 @@ export const UserProfil = () => {
 
  const handleChange = (e) => {
   const {name, value} = e.target;
-  setFormData((prevData) => ({
+  setUserData((prevData) => ({
     ...prevData,
     [name]: name === 'img' ? e.target.files[0] : value,
   }));
@@ -151,6 +155,8 @@ export const UserProfil = () => {
     });
   
     setUpdatedSkills([]);
+    setSelectedSkills([]);
+    setAvailableSkills([]);
     setIsModalSkillsOpen(false)
   };
 
@@ -183,6 +189,8 @@ export const UserProfil = () => {
     });
   
     setUpdatedNeeds([]);
+    setSelectedNeeds([]);
+    setAvailableNeeds([]);
     setIsModalNeedsOpen(false)
 
   };
@@ -203,21 +211,25 @@ export const UserProfil = () => {
     }));
   };
 
- 
-  const handleImgChange = (e) => {
-    setUserData((prevUser) => ({
-      ...prevUser,
-      img: e.target.files[0],
-    }));
-  };
-
 
   const handleUpdateProfile = () => {
     console.log('User', userData);
+    const formData = new FormData();
+    formData.append('img', userData.img);
+    formData.append('firstName', userData.firstName);
+    formData.append('lastName', userData.lastName);
+    formData.append('email', userData.email);
+    formData.append('location', userData.location);
+    formData.append('skills', JSON.stringify(userData.skills));
+    formData.append('needs', JSON.stringify(userData.needs));
 
       const updatedUser = async () => {
         try {
-          const response = await axios.put(`http://localhost:8000/users/update/${id}`, userData);
+          const response = await axios.put(`http://localhost:8000/users/update/${id}`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
           console.log('User response', response.data);
         } catch (error) {
           if (error.response) {
@@ -237,10 +249,14 @@ export const UserProfil = () => {
   return (
     <div className={style.UserProfile}>
     <h1>My Profile</h1>
-    {userData ? (
+    {loading ? <p>Loading...</p> : userData ? (
       <div>
-         {userData.img ? <img src={userData.img} alt={userData.name} width={200} className={img} /> : <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" />}
-        
+         {userData.img ? (
+      <img src={typeof userData.img === 'string' ? userData.img : URL.createObjectURL(userData.img)} alt={userData.firstName} width={200} className={style.img} />
+      ) : (
+      <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" width={200} className={style.img} />
+      )}
+   
           {isEditMode ? (
             <>
               <input name="img" type="file" onChange={handleChange} />
@@ -306,6 +322,8 @@ export const UserProfil = () => {
             <Modal isOpen={isModalSkillsOpen} onClose={() => {
               setIsModalSkillsOpen(false)
               setUpdatedSkills([]);
+              setSelectedSkills([]);
+              setAvailableSkills([]);
             }}
             >
               <h2 className="text-lg font-bold mb-4">Select new skill</h2>
@@ -329,11 +347,15 @@ export const UserProfil = () => {
                 </select>
               </div>
               <button
-                className="px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded mt-4"
-                onClick={handleUpdateSkills}
-              >
-                Add new skill
-              </button>
+              className={`px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded mt-4 ${
+                selectedSkills.length === 0 ? 'cursor-not-allowed opacity-50' : ''
+              }`}
+              onClick={handleUpdateSkills}
+              disabled={selectedSkills.length === 0}
+            >
+              Add new skill
+            </button>
+
             </Modal>
                     
         </div>
@@ -368,6 +390,8 @@ export const UserProfil = () => {
           <Modal isOpen={isModalNeedsOpen} onClose={() => {
             setIsModalNeedsOpen(false)
             setUpdatedNeeds([]);
+            setSelectedNeeds([]);
+            setAvailableNeeds([]);
           }}>
             <h2 className="text-lg font-bold mb-4">Select new need</h2>
             <div className={style.selections}>
