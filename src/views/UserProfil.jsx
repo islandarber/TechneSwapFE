@@ -70,7 +70,7 @@ export const UserProfil = () => {
 
  const handleChange = (e) => {
   const {name, value} = e.target;
-  setUserData((prevData) => ({
+  setFormData((prevData) => ({
     ...prevData,
     [name]: name === 'img' ? e.target.files[0] : value,
   }));
@@ -191,16 +191,18 @@ export const UserProfil = () => {
   const handleDeleteSkillAl = (skill) => {
     setUserData((prevUser) => ({
       ...prevUser,
-      skills: prevUser.skills.filter((s) => s.name !== skill.name),
+      skills: prevUser.skills.filter((s) => s._id !== skill._id),
     }));
   };
+
 
   const handleDeleteNeedAl = (need) => {
     setUserData((prevUser) => ({
       ...prevUser,
-      needs: prevUser.needs.filter((n) => n.name !== need.name),
+      needs: prevUser.needs.filter((n) => n._id !== need._id),
     }));
   };
+
  
   const handleImgChange = (e) => {
     setUserData((prevUser) => ({
@@ -337,6 +339,7 @@ export const UserProfil = () => {
         </div>
 
           
+
         {/* Needs management */} 
         <div className='mt-4'>
           <h5 className='font-bold text-lg'>Your needs</h5>
@@ -345,6 +348,7 @@ export const UserProfil = () => {
             {userData.needs && userData.needs.length > 0 ? (
               userData.needs.map((need, index) => (
                 <div key={index} className="flex bg-custom-blue hover:bg-custom-blue-dark text-white items-center px-2 py-1">
+
                   <p>{need.name}</p>
                   {isEditMode ? <button onClick={() => handleDeleteNeedAl(need)} className={style.deleteBTn}>🗑️</button> : null}
                 </div>
@@ -367,6 +371,7 @@ export const UserProfil = () => {
           }}>
             <h2 className="text-lg font-bold mb-4">Select new need</h2>
             <div className={style.selections}>
+
                <label htmlFor="categorySelect">Select Category:</label>
               <select id="categorySelect" onChange={(e) => handleNeedsBasedOnCat(e)}>
               <option value="" disabled selected>Category</option>
