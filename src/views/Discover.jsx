@@ -109,7 +109,6 @@ export const Discover = () => {
       <NavbarDiscover setShowAll={setShowAll} />
       {showAll ? <div className={style.discoverViewAll}>
         <h1>Discover the world of TechneSwap!</h1>
-        {errorgeneral && <p>{errorgeneral.message}</p>}
         <form onSubmit={handleSearch}>
           <div className={style.category__selector}>
             <label htmlFor="category">Category:</label>
@@ -155,28 +154,28 @@ export const Discover = () => {
         </form>
         <div>
           <h1>Results</h1>
-          {loading && <p>Loading...</p>}
           <div className={style.results}>
-            {errorResults && <p>{errorResults.message}</p>}
-            {
+            {errorResults ? <p>{errorResults.message}</p> : loading ? <p>Loading...</p> :
             allUsers && allUsers.map((user, index) => {
                 return (
                   <div key={index} className={style.result__userCard} onClick={()=>navigate(`/discover/${user._id}`)}>
                     <div className={style.imgNameLocation}>
-                      <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="avatar" />
+                      {user.img ? <img src={user.img} alt={user.name} /> 
+                      :<img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="avatar" />}
                       <h2>{user.firstName}</h2>
                       <p>📍{user.location}</p>
                     </div>
                     <div className={style.skillsNeeds}>
                       <h3>Skills</h3>
-                        {user.skills.map((skill, index) => {
-                          return <li key={index}>{skill.name}</li>
-                        })}
+                      {user.skills.map((skill, index) => (
+                        <li key={index}>{skill.name ? skill.name : skill}</li>
+                      ))}
+
                     </div>
                     <div className={style.skillsNeeds}>
                     <h3>Needs</h3>
                       {user.needs.map((need, index) => {
-                        return <li key={index}>{need.name}</li>
+                        return <li key={index}>{need.name ?need.name : need}</li>
                       })}
                     </div>
                   </div>
