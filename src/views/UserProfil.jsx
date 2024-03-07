@@ -26,6 +26,7 @@ export const UserProfil = () => {
 
   const { id } = useParams();
 
+
   const [userData, setUserData] = useState({
     firstName: '',
     lastName:  '',
@@ -200,6 +201,14 @@ export const UserProfil = () => {
       needs: prevUser.needs.filter((n) => n.name !== need.name),
     }));
   };
+ 
+  const handleImgChange = (e) => {
+    setUserData((prevUser) => ({
+      ...prevUser,
+      img: e.target.files[0],
+    }));
+  };
+
 
   const handleUpdateProfile = () => {
     console.log('User', userData);
