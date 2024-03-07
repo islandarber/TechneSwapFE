@@ -10,6 +10,8 @@ export const UserProfil = () => {
   const [updatedSkills, setUpdatedSkills] = useState([]);              
   const [updatedNeeds, setUpdatedNeeds] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   const [availableSkills, setAvailableSkills] = useState([]);
   const [availableNeeds, setAvailableNeeds] = useState([]);
 
@@ -61,6 +63,8 @@ export const UserProfil = () => {
         } else {
           console.error('Error setting up the request', error.message);
         }
+      }finally {
+        setLoading(false);
       }
     };
   
@@ -221,7 +225,11 @@ export const UserProfil = () => {
 
       const updatedUser = async () => {
         try {
-          const response = await axios.put(`http://localhost:8000/users/update/${id}`, formData);
+          const response = await axios.put(`http://localhost:8000/users/update/${id}`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
           console.log('User response', response.data);
         } catch (error) {
           if (error.response) {
@@ -241,10 +249,14 @@ export const UserProfil = () => {
   return (
     <div className={style.UserProfile}>
     <h1>My Profile</h1>
-    {userData ? (
+    {loading ? <p>Loading...</p> : userData ? (
       <div>
-         {userData.img ? <img src={userData.img} alt={userData.name} width={200} className={style.img} /> : <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" />}
-        
+         {userData.img ? (
+      <img src={typeof userData.img === 'string' ? userData.img : URL.createObjectURL(userData.img)} alt={userData.firstName} width={200} className={style.img} />
+      ) : (
+      <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" width={200} className={style.img} />
+      )}
+   
           {isEditMode ? (
             <>
               <input name="img" type="file" onChange={handleChange} />
