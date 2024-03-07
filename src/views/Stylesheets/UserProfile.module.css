@@ -6,7 +6,8 @@
   margin: 20px;
 }
 
-.userImg {
+
+.UserProfile img{
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -58,11 +59,12 @@
 .selections {
   display: flex;
   gap: 10px;
+  flex-direction: column;
 }
 
 .selections select {
   width: 100%;
-  padding: 0 5px;
+  height: 100%;
   border: none;
   border-radius: 5px;
   background-color: #f5f5f5;
