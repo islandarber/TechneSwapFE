@@ -22,7 +22,7 @@ export const Navbar = () => {
     <div className="navbar">
       <img src={techneSwapLogo} alt="logologin" className="logoimg" />
 
-      <nav role='navigation'>
+      {/* <nav role='navigation'>
         <div id="menuToggle">
           <input type="checkbox" checked={isMenuOpen} onChange={handleMenuToggle} />
           <span></span>
@@ -34,7 +34,7 @@ export const Navbar = () => {
             <a onClick={() => isMenuOpen && handleLinkClick('/')}><li>Logout</li></a>
           </ul>
         </div>
-      </nav>
+      </nav> */}
     </div>
   );
 };

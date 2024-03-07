@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import style from './Stylesheets/Discover.module.css';
+import { DisplayMatched } from './DisplayMatched';
+import {NavbarDiscover} from './NavbarDiscover';
+import { useNavigate } from 'react-router-dom';
+
+
 
 
 export const Discover = () => {
-  const [filteredUsers, setfilteredUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [allUsers, setAllUsers] = useState([]);
+
+  const [showAll, setShowAll] = useState(true);
+
+  const [loading, setLoading] = useState(false);
+
   const [errorgeneral, setErrorgeneral] = useState(null);
   const [errorResults, setErrorResults] = useState(null);
+
   const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     category: "",
@@ -26,16 +37,26 @@ export const Discover = () => {
   }
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchData = async () => {
     try {
+      setLoading(true);
       const categoryresponse = await axios.get('http://localhost:8000/categories');
+      const userAllResponce = await axios.get('http://localhost:8000/users');
+      setAllUsers(userAllResponce.data);
+      console.log("response after fetching Data",userAllResponce.data);
       setCategories(categoryresponse.data);
     } catch (error) {
+      if (error.response) {
+        setErrorgeneral(error.response.data);
+      } else {
+        setErrorgeneral(error);
+      }
       console.error(error);
-      setErrorgeneral(error);
+    } finally {
+      setLoading(false);
     }
   }
-  fetchCategories();
+  fetchData();
   }, []);
 
   const handleSearch =  (e) => {
@@ -55,8 +76,9 @@ export const Discover = () => {
     }
     const fetchUsers = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`http://localhost:8000/users?${queries.join('&')}`);
-        setfilteredUsers(response.data);
+        setAllUsers(response.data);
         console.log("response after fetching Data",response.data);
       } catch (error) {
         if (error.response) {
@@ -65,6 +87,8 @@ export const Discover = () => {
           setErrorgeneral(error);
         }
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchUsers();
@@ -81,85 +105,89 @@ export const Discover = () => {
   
 
   return (
-    <div className={style.discoverViewAll}>
-      <h1>Discover the world of TechneSwap!</h1>
-      <form onSubmit={handleSearch}>
-        <div className={style.category__selector}>
-          <label htmlFor="category">Category:</label>
-          <select name="category" id="category" onChange={handleChange}>
-            <option value="">All</option>
-            {categories && categories.map((category, index) => {
-              return <option key={index} value={category.name}>{category.name}</option>
-            })}
-          </select>
-        </div>
-        <div className={style.radio__selectors}>
-          <label htmlFor="skills">Skills</label>
-          <input
-            type="radio"
-            id="skills"
-            name="field"
-            value="skills"
-            checked={formData.field === "skills"}
-            onChange={handleChange}
-          />
-          <label htmlFor="needs">Needs</label>
-          <input
-            type="radio"
-            id="needs"
-            name="field"
-            value="needs"
-            checked={formData.field === "needs"}
-            onChange={handleChange}
-          />
-          <label htmlFor="all">All</label>
-          <input
-            type="radio"
-            id="all"
-            name="field"
-            value="all"
-            checked={formData.field === "all"}
-            onChange={handleChange}
-          />
-        </div>
-
-        <label htmlFor="keyword">Keyword</label>
-        <input type="text" id='keyword' name='keyword' value={formData.keyword} onChange={handleChange}/>
-
-
-        <button type="submit">Search</button>
-
-      </form>
-
-      <div>
-        <h1>Results</h1>
+    <div>
+      <NavbarDiscover setShowAll={setShowAll} />
+      {showAll ? <div className={style.discoverViewAll}>
+        <h1>Discover the world of TechneSwap!</h1>
+        {errorgeneral && <p>{errorgeneral.message}</p>}
+        <form onSubmit={handleSearch}>
+          <div className={style.category__selector}>
+            <label htmlFor="category">Category:</label>
+            <select name="category" id="category" onChange={handleChange}>
+              <option value="">All</option>
+              {categories && categories.map((category, index) => {
+                return <option key={index} value={category.name}>{category.name}</option>
+              })}
+            </select>
+          </div>
+          <div className={style.radio__selectors}>
+            <label htmlFor="skills">Skills</label>
+            <input
+              type="radio"
+              id="skills"
+              name="field"
+              value="skills"
+              checked={formData.field === "skills"}
+              onChange={handleChange}
+            />
+            <label htmlFor="needs">Needs</label>
+            <input
+              type="radio"
+              id="needs"
+              name="field"
+              value="needs"
+              checked={formData.field === "needs"}
+              onChange={handleChange}
+            />
+            <label htmlFor="all">All</label>
+            <input
+              type="radio"
+              id="all"
+              name="field"
+              value="all"
+              checked={formData.field === "all"}
+              onChange={handleChange}
+            />
+          </div>
+          <label htmlFor="keyword"></label>
+          <input type="text" id='keyword' name='keyword' placeholder='keyword' value={formData.keyword} onChange={handleChange}/>
+          <button type="submit">Search</button>
+        </form>
         <div>
-          {errorResults ? <p>{errorResults.message}</p> 
-          :
-            filteredUsers && filteredUsers.map((user, index) => {
-              return (
-                <div key={index}>
-                  <h2>{user.firstName} {user.lastName}</h2>
-                  <p>{user.location}</p>
-                  <h3>Skills</h3>
-                  <ul>
-                    {user.skills.map((skill, index) => {
-                      return <li key={index}>{skill}</li>
-                    })}
-                  </ul>
-                  <h3>Needs</h3>
-                  <ul>
-                    {user.needs.map((need, index) => {
-                      return <li key={index}>{need}</li>
-                    })}
-                  </ul>
-                </div>
-              )
-            })
-          }
+          <h1>Results</h1>
+          {loading && <p>Loading...</p>}
+          <div className={style.results}>
+            {errorResults && <p>{errorResults.message}</p>}
+            {
+            allUsers && allUsers.map((user, index) => {
+                return (
+                  <div key={index} className={style.result__userCard} onClick={()=>navigate(`/discover/${user._id}`)}>
+                    <div className={style.imgNameLocation}>
+                      <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" alt="avatar" />
+                      <h2>{user.firstName}</h2>
+                      <p>📍{user.location}</p>
+                    </div>
+                    <div className={style.skillsNeeds}>
+                      <h3>Skills</h3>
+                        {user.skills.map((skill, index) => {
+                          return <li key={index}>{skill.name}</li>
+                        })}
+                    </div>
+                    <div className={style.skillsNeeds}>
+                    <h3>Needs</h3>
+                      {user.needs.map((need, index) => {
+                        return <li key={index}>{need.name}</li>
+                      })}
+                    </div>
+                  </div>
+                )
+              })
+            }
+          </div>
         </div>
       </div>
-
+      : <DisplayMatched setShowAll={setShowAll} />
+}
     </div>
   )
 }

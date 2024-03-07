@@ -1,0 +1,73 @@
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+}
+
+
+.result__userCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid #3e8fb0;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f7f5f5;
+  box-shadow: 0 0 5px 0 #3e8fb0;
+}
+
+.result__userCard p {
+  font-size: 0.5rem;
+}
+
+.imgNameLocation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgNameLocation h2 {
+  font-size: 1rem;
+  color: #3e8fb0;
+}
+
+.result__userCard img{
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+
+}
+
+.skillsNeeds {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.skillsNeeds h3 {
+  font-size: 0.5rem;
+  color: #3e8fb0;
+}
+
+.skillsNeeds li {
+  font-size: 0.5rem;
+  color: #00b7ff;
+  list-style: none;
+}
+
+.matchedBoth {
+  color: red;
+}
+
+.matchedSkills {
+  color: green;
+}
+
+.matchedNeeds {
+  color: blue;
+}
