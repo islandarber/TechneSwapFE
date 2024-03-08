@@ -2,11 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   margin: 20px;
 }
 
-
+ 
 .UserProfile img{
   width: 100px;
   height: 100px;
@@ -23,7 +24,7 @@
   font-size: 0.7rem;
   color: #eb9500;
 }
-
+/*
 .UserProfile button {
   width: 30%;
   padding: 0 2%;
@@ -33,11 +34,10 @@
   color: white;
   font-size: 0.7rem;
   cursor: pointer;
-}
-
+} */
+/* 
 .deleteBTn {
   border: none !important;
-  background-color: rgb(247, 245, 245) !important;
 }
 
 .UserProfile label {
@@ -92,4 +92,4 @@
   font-size: 0.7rem;
   border: #3e8fb0 1px solid;
   border-radius: 50px;
-}
+} */

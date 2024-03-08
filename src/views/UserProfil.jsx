@@ -29,15 +29,7 @@ export const UserProfil = () => {
   const { id } = useParams();
 
 
-  const [userData, setUserData] = useState({
-    firstName: '',
-    lastName:  '',
-    email: '',
-    location: '',
-    img: null,
-    skills: [],
-    needs: [],
-  });
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
