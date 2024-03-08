@@ -243,10 +243,10 @@ export const UserProfil = () => {
 
   
   return (
-    <div className={style.UserProfile}>
+    <div >
     <h1>My Profile</h1>
     {loading ? <p>Loading...</p> : userData ? (
-      <div>
+      <div className={style.UserProfile}>
          {userData.img ? (
       <img src={typeof userData.img === 'string' ? userData.img : URL.createObjectURL(userData.img)} alt={userData.firstName} width={200} className={style.img} />
       ) : (
