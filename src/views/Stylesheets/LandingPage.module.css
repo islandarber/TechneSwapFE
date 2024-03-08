@@ -6,15 +6,16 @@ text: #333333
 
 */
 
+
+
 .LandingPageAll {
   margin-top: 3rem;
-  background-color: #3e8fb0;
   width: 100%;
   max-height: 100vh;
 }
 
 .LandingPage {
-    background-color: #f4f4f4;  
+    background-color: #f4f4f4; 
 }
 
 .logoimg {

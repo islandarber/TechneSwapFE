@@ -61,7 +61,7 @@ export const Login = () => {
           
         </label>
         <input type="password" name="password" value={formData.password} onChange={(e)=> handleChange(e)}/>
-        <button type="submit" value="Login" className={style.loginbutton}>Login</button>
+        <button type="submit" value="Login" className="w-[5rem] p-2 border-none rounded-md bg-custom-orange shadow-md text-white text-lg">Login</button>
       </form>
     
  
