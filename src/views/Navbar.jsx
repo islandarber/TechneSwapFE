@@ -6,26 +6,13 @@ import './Stylesheets/Navbar.css';
 
 export const Navbar = () => {
   const Navigate = useNavigate();
-  const [isMenuOpen, setMenuOpen] = useState(false);
-
-  const handleMenuToggle = () => {
-    setMenuOpen(!isMenuOpen);
-  };
-
-  const handleLinkClick = (path) => {
-    // Close the menu when a link is clicked
-    setMenuOpen(false);
-    // Navigate to the specified path
-    Navigate(path);
-  };
-
   const [isNavOpen, setIsNavOpen] = useState(false); // initiate isNavOpen state with false
 
   return (
     <div className="navbar">
       <img src={techneSwapLogo} alt="logologin" className="logoimg" />
       
-  <div className="flex items-center justify-between border-b border-gray-400 mr-2">
+  <div className="flex items-center justify-between border-b border-customgrey-400 mr-2">
     <nav>
       <section className="MOBILE-MENU flex lg:hidden">
         <div
@@ -39,7 +26,7 @@ export const Navbar = () => {
 
         <div className={isNavOpen ? "showMenuNav" : "hideMenuNav"}>
           <div
-            className="CROSS-ICON absolute top-0 right-0 px-8 py-8"
+            className="CROSS-ICON absolute top-0 right-0 px-1 py-1 pt-0"
             onClick={() => setIsNavOpen(false)} // change isNavOpen state to false to close the menu
           >
             <svg
@@ -55,15 +42,15 @@ export const Navbar = () => {
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </div>
-          <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center justify-between min-h-[250px]">
-            <li className="border-b border-gray-400 my-8 uppercase">
-              <a href="/about">About</a>
+          <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center justify-between min-h-[250px] mt-3">
+            <li className="my-8">
+              <a onClick={Navigate('/')}>Home</a>
             </li>
-            <li className="border-b border-gray-400 my-8 uppercase">
-              <a href="/portfolio">Portfolio</a>
+            <li className="my-8">
+              <a onClick={Navigate('/Discover')}>Discover</a>
             </li>
-            <li className="border-b border-gray-400 my-8 uppercase">
-              <a href="/contact">Contact</a>
+            <li className="my-8">
+              <a onClick={Navigate('/')}>Log Out</a>
             </li>
           </ul>
         </div>
@@ -88,16 +75,21 @@ export const Navbar = () => {
     .showMenuNav {
       display: block;
       position: absolute;
-      width: 100%;
-      height: 100vh;
+      width: 30%;
       top: 0;
-      left: 0;
+      right: 0;
       background: white;
       z-index: 10;
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
       align-items: center;
+      border-radius: 10px;
+      background-color: #f9a03f;
+      color: white;
+      font-weight: bold;
+      margin-top: 5px;
+      margin-right: 5px;
     }
   `}</style>
   </div>

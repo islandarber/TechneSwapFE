@@ -24,7 +24,7 @@
   font-size: 0.7rem;
   color: #eb9500;
 }
-/*
+/* 
 .UserProfile button {
   width: 30%;
   padding: 0 2%;
@@ -34,8 +34,8 @@
   color: white;
   font-size: 0.7rem;
   cursor: pointer;
-} */
-/* 
+}  */
+ 
 .deleteBTn {
   border: none !important;
 }
@@ -78,18 +78,12 @@
 }
 
 
-.skill__Display {
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-}
 
 .individualSkill {
   display: flex;
   gap: 5px;
-  padding: 5px;
   align-items: center;
   font-size: 0.7rem;
   border: #3e8fb0 1px solid;
   border-radius: 50px;
-} */
+}
