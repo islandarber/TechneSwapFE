@@ -24,7 +24,7 @@
 }
 
 .discoverViewAll form select {
-  width: 50%;
+  width: 100%;
 }
 
 .discoverViewAll form input {
@@ -87,9 +87,12 @@
 
 .result__userCard {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  width: 150px;
+  height: 100%;
   border: 2px solid #3e8fb0;
   border-radius: 5px;
   padding: 10px;

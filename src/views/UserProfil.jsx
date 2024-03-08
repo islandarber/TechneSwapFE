@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import style from './Stylesheets/UserProfile.module.css';
 import Modal from '../components/Modal';
+import toast, {Toaster} from 'react-hot-toast'
 
 export const UserProfil = () => {
   const [categories, setCategories] = useState([]);
+  const notify = () => toast('Account updated successfully');
 
   const [updatedSkills, setUpdatedSkills] = useState([]);              
   const [updatedNeeds, setUpdatedNeeds] = useState([]);
@@ -25,6 +27,7 @@ export const UserProfil = () => {
   const [isModalSkillsOpen, setIsModalSkillsOpen] = useState(false);
   const [isModalNeedsOpen, setIsModalNeedsOpen] = useState(false);
 
+  
 
   const { id } = useParams();
 
@@ -223,6 +226,7 @@ export const UserProfil = () => {
             },
           });
           console.log('User response', response.data);
+          notify();
         } catch (error) {
           if (error.response) {
             setError(error.response.data);
@@ -239,10 +243,10 @@ export const UserProfil = () => {
 
   
   return (
-    <div className={style.UserProfile}>
+    <div >
     <h1>My Profile</h1>
     {loading ? <p>Loading...</p> : userData ? (
-      <div>
+      <div className={style.UserProfile}>
          {userData.img ? (
       <img src={typeof userData.img === 'string' ? userData.img : URL.createObjectURL(userData.img)} alt={userData.firstName} width={200} className={style.img} />
       ) : (
@@ -290,13 +294,13 @@ export const UserProfil = () => {
         {/* Skills management */}
         <div className='mt-4'>
           <h5 className='font-bold text-lg'>Your skills</h5>
-            <div className={style.skill__Display}>
+            <div>
               <div className='flex flex-wrap gap-2'>
               {userData.skills && userData.skills.length > 0 ? (
                 userData.skills.map((skill, index) => (
                   <div key={index} className="flex bg-custom-blue hover:bg-custom-blue-dark text-white items-center px-2 py-1">
                     <p>{skill.name}</p>
-                    {isEditMode && <button onClick={() => handleDeleteSkillAl(skill)} className={style.deleteBTn}>🗑️</button>}
+                    {isEditMode && <button onClick={() => handleDeleteSkillAl(skill)} className={style.deleteBTn}>X</button>}
                   </div>
                 ))
               ) : (
@@ -332,7 +336,7 @@ export const UserProfil = () => {
                 <label htmlFor="skillSelect">Select Skill:</label>
                 <select id="skillSelect" multiple value={selectedSkills} onChange={handleSelectedSkillsChange}>
                   {availableSkills.map((skill) => (
-                    <option key={skill._id} value={skill.name} onClick={() => setUpdatedSkills([...updatedSkills, ...selectedSkills])}>
+                    <option key={skill._id} value={skill.name} onClick={() => setUpdatedSkills([...updatedSkills, ...selectedSkills])} disabled={userData.skills.some((userSkill) => userSkill.name === skill.name)}>
                       {skill.name}
                     </option>
                   ))}
@@ -364,7 +368,7 @@ export const UserProfil = () => {
                 <div key={index} className="flex bg-custom-blue hover:bg-custom-blue-dark text-white items-center px-2 py-1">
 
                   <p>{need.name}</p>
-                  {isEditMode ? <button onClick={() => handleDeleteNeedAl(need)} className={style.deleteBTn}>🗑️</button> : null}
+                  {isEditMode ? <button onClick={() => handleDeleteNeedAl(need)} className={style.deleteBTn}>X</button> : null}
                 </div>
               ))
             ) : (
@@ -425,6 +429,24 @@ export const UserProfil = () => {
       
       <button className="px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
     )}
+    <Toaster
+      position="bottom-center"
+      reverseOrder={false}
+      gutter={8}
+      containerClassName=""
+      containerStyle={{}}
+      toastOptions={{
+        // Define default options
+        className: '',
+        duration: 3000,
+        style: {
+          background: '#f9a03f',
+          color: '#fff',
+        },
+
+    // Default options for specific types
+  }}
+/>
   </div>
 );
 };
