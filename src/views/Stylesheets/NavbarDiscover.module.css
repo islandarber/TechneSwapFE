@@ -1,26 +1,24 @@
 .NavbarDiscover {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  border-bottom: 1px solid #f9a03f;
-  color: #f9a03f;
-  font-size: 0.7rem;
+  justify-content: center;
+  gap: 20px;
+  font-size: 1rem;
+  margin-top: 20px;
 }
 
-.NavbarDiscoverLink {
-  text-decoration: none;
+.NavbarDiscover button {
   font-weight: bold;
   color: #333333;
 }
 
-.NavbarDiscoverLinkActive {
+.NavbarDiscover button:Active {
   text-decoration: none;
   font-weight: bold;
   color: #f9a03f;
 }
 
-.NavbarDiscoverLink:hover {
+.NavbarDiscover button:hover {
   text-decoration: none;
   font-weight: bold;
-  color: #f9a03f;
+  color: #f59126;
 }

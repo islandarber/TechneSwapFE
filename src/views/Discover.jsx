@@ -156,7 +156,7 @@ export const Discover = () => {
           <h1>Results</h1>
           <div className={style.results}>
             {errorResults ? <p>{errorResults.message}</p> : loading ? <p>Loading...</p> :
-            allUsers && allUsers.map((user, index) => {
+            allUsers ? allUsers.map((user, index) => {
                 return (
                   <div key={index} className={style.result__userCard} onClick={()=>navigate(`/discover/${user._id}`)}>
                     <div className={style.imgNameLocation}>
@@ -167,20 +167,21 @@ export const Discover = () => {
                     </div>
                     <div className={style.skillsNeeds}>
                       <h3>Skills</h3>
-                      {user.skills.map((skill, index) => (
+                      { user.skills && user.skills.map((skill, index) => (
                         <li key={index}>{skill.name ? skill.name : skill}</li>
                       ))}
 
                     </div>
                     <div className={style.skillsNeeds}>
                     <h3>Needs</h3>
-                      {user.needs.map((need, index) => {
+                      {user.needs && user.needs.map((need, index) => {
                         return <li key={index}>{need.name ?need.name : need}</li>
                       })}
                     </div>
                   </div>
                 )
               })
+              : <p>No results</p>
             }
           </div>
         </div>
