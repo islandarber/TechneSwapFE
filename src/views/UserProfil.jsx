@@ -245,7 +245,7 @@ export const UserProfil = () => {
 
   
   return (
-    <div className='flex flex-col items-center justify-center mt-2' >
+    <div className='flex flex-col items-center justify-center mt-4' >
     {loading ? <p>Loading...</p> : userData ? (
       <div className='flex flex-col items-center justify-center'>
          {userData.img ? (
@@ -337,7 +337,7 @@ export const UserProfil = () => {
         <div className='flex flex-col items-center mt-4'>
           <h5 className='font-bold text-lg ml-1'>Your skills :</h5>
             <div>
-              <div className='flex flex-wrap gap-2 mt-1'>
+              <div className='flex flex-wrap gap-2 mt-1 justify-center'>
               {userData.skills && userData.skills.length > 0 ? (
                 userData.skills.map((skill, index) => (
                   <div key={index} className="flex bg-custom-blue hover:bg-custom-blue-dark text-white items-center px-2 py-2 rounded ml-1">
@@ -351,12 +351,12 @@ export const UserProfil = () => {
             </div>
 
             {isEditMode ? (
-              <button className="mt-2 px-2 py-1 bg-custom-orange hover:bg-custom-orange-dark text-white rounded focus:outline-none focus:border-custom-orange ml-1" onClick={() => setIsModalSkillsOpen(true)}>
-              Add new skill
-            </button>
-            
-            
-          ): null }
+            <div className="flex justify-center"> {/* Add this div for centering */}
+              <button className="mt-3 px-2 py-1 bg-custom-orange hover:bg-custom-orange-dark text-white rounded focus:outline-none focus:border-custom-orange" onClick={() => setIsModalSkillsOpen(true)}>
+                Add new skill
+              </button>
+            </div>
+          ) : null}
 
             
             <Modal isOpen={isModalSkillsOpen} onClose={() => {
@@ -404,7 +404,7 @@ export const UserProfil = () => {
 
         {/* Needs management */} 
         <div className='flex flex-col items-center mt-4'>
-          <h5 className='font-bold text-lg ml-1'>Your needs:</h5>
+          <h5 className='font-bold text-lg ml-1'>Your needs :</h5>
           <div className='flex flex-wrap gap-2 mt-1'>
 
             {userData.needs && userData.needs.length > 0 ? (
@@ -422,7 +422,7 @@ export const UserProfil = () => {
 
 
           {isEditMode ? (
-              <button className="mt-2 px-2 py-1 bg-custom-orange hover:bg-custom-orange-dark text-white rounded focus:outline-none focus:border-custom-orange ml-1" onClick={() => setIsModalNeedsOpen(true)}>
+              <button className="mt-3 px-2 py-1 bg-custom-orange hover:bg-custom-orange-dark text-white rounded focus:outline-none focus:border-custom-orange ml-1" onClick={() => setIsModalNeedsOpen(true)}>
               Add new need      
               </button>
           ): null }
@@ -471,7 +471,7 @@ export const UserProfil = () => {
     ) : null}
 
     {isEditMode ? (
-      <button  className="w-1/3 mt-6 px-3 py-1 bg-custom-orange hover:bg-custom-blue-dark text-white rounded  mb-6" onClick={handleUpdateProfile}>Save Profile</button>
+      <button  className="w-1/3 mt-9 px-3 py-1 bg-custom-orange hover:bg-custom-blue-dark text-white rounded  mb-6" onClick={handleUpdateProfile}>Save Profile</button>
     ) : (
       
       <button className="w-1/3 mt-8 mb-4 px-3 py-1 bg-custom-orange hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
