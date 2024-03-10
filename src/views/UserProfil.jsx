@@ -46,6 +46,7 @@ export const UserProfil = () => {
           lastName: userResponse.data.lastName,
           email: userResponse.data.email,
           location: userResponse.data.location,
+          description: userResponse.data.description,
           skills: userResponse.data.skills,
           needs: userResponse.data.needs,
           img: userResponse.data.img,
@@ -215,6 +216,7 @@ export const UserProfil = () => {
     formData.append('lastName', userData.lastName);
     formData.append('email', userData.email);
     formData.append('location', userData.location);
+    formData.append('description', userData.description);
     formData.append('skills', JSON.stringify(userData.skills));
     formData.append('needs', JSON.stringify(userData.needs));
 
@@ -243,64 +245,104 @@ export const UserProfil = () => {
 
   
   return (
-    <div >
-    <h1>My Profile</h1>
+    <div className='flex flex-col items-center justify-center mt-2' >
     {loading ? <p>Loading...</p> : userData ? (
-      <div className={style.UserProfile}>
+      <div className='flex flex-col items-center justify-center'>
          {userData.img ? (
-      <img src={typeof userData.img === 'string' ? userData.img : URL.createObjectURL(userData.img)} alt={userData.firstName} width={200} className={style.img} />
+      <img
+      src={typeof userData.img === 'string' ? userData.img : URL.createObjectURL(userData.img)}
+      alt={userData.firstName}
+      className="h-32 w-32 object-cover rounded-md"
+    />
       ) : (
-      <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" width={200} className={style.img} />
+      <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="avatar" width={200} className="h-32 w-32 object-cover rounded-sm" />
       )}
    
           {isEditMode ? (
-            <>
-              <input name="img" type="file" onChange={handleChange} />
-              <input
-                type="text"
-                name='firstName'
-                defaultValue={userData.firstName}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name='lastName'
-                defaultValue={userData.lastName}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name='email'
-                defaultValue={userData.email}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name='location'
-                defaultValue={userData.location}
-                placeholder='Add your location'
-                onChange={handleChange}
-              />
-            </>
+            <div className="max-w-md mx-auto p-4 rounded-md">
+            <label className="block mb-1 text-xs font-bold text-gray-600">Profile Picture</label>
+            <input
+              name="img"
+              type="file"
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 mb-2 rounded-md focus:outline-none focus:border-orange-500"
+            />
+          
+            <label className="block mb-1 text-xs font-bold text-gray-600">First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              defaultValue={userData.firstName}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 mb-2 rounded-md focus:outline-none focus:border-orange-500"
+            />
+          
+            <label className="block mb-1 text-xs font-bold text-gray-600">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              defaultValue={userData.lastName}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 mb-2 rounded-md focus:outline-none focus:border-orange-500"
+            />
+          
+            <label className="block mb-1 text-xs font-bold text-gray-600">Email</label>
+            <input
+              type="text"
+              name="email"
+              defaultValue={userData.email}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 mb-2 rounded-md focus:outline-none focus:border-orange-500"
+            />
+          
+            <label className="block mb-1 text-xs font-bold text-gray-600">Location</label>
+            <input
+              type="text"
+              name="location"
+              defaultValue={userData.location}
+              placeholder="Add your location"
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 mb-2 rounded-md focus:outline-none focus:border-orange-500"
+            />
+
+            <label htmlFor="description">About me :</label>
+            <textarea
+              name="description"
+              id="description"
+              cols="30"
+              rows="10"
+              defaultValue={userData.description}
+              className="w-full border border-gray-300 p-2 mb-2 rounded-md focus:outline-none focus:border-orange-500"
+              onChange={handleChange}></textarea>
+          </div>
+          
+          
             
           ) : (
-            <>
-              <p>{userData.firstName}</p>
-              <p>{userData.lastName}</p>
-              <p>{userData.email}</p>
-              <p>{userData.location}</p>
-            </>
+            <div className='flex flex-col items-center text-2xl mb-4 mt-4'>
+            <p className='mb-2 text-custom-blue-dark font-bold'>{userData.firstName}</p>
+            <p className='mb-2 text-custom-blue-dark font-bold'>{userData.lastName}</p>
+            <p className='mb-2 text-custom-blue-dark text-base'><span>
+                <span role="img" aria-label="Location Emoji">
+                  ⚲
+                </span>{" "}
+                {userData.location}
+              </span></p>
+            <p className='mb-2 text-custom-blue-dark text-base'>{userData.email}</p>
+            <p className='mb-2 text-center text-custom-blue-dark m-6 text-base'>{userData.description}</p>
+          </div>
+
           )}
         {/* Skills management */}
-        <div className='mt-4'>
-          <h5 className='font-bold text-lg'>Your skills</h5>
+        <div className='flex flex-col items-center mt-4'>
+          <h5 className='font-bold text-lg ml-1'>Your skills :</h5>
             <div>
-              <div className='flex flex-wrap gap-2'>
+              <div className='flex flex-wrap gap-2 mt-1'>
               {userData.skills && userData.skills.length > 0 ? (
                 userData.skills.map((skill, index) => (
-                  <div key={index} className="flex bg-custom-blue hover:bg-custom-blue-dark text-white items-center px-2 py-1">
+                  <div key={index} className="flex bg-custom-blue hover:bg-custom-blue-dark text-white items-center px-2 py-2 rounded ml-1">
                     <p>{skill.name}</p>
-                    {isEditMode && <button onClick={() => handleDeleteSkillAl(skill)} className={style.deleteBTn}>X</button>}
+                    {isEditMode && <button onClick={() => handleDeleteSkillAl(skill)} className="border border-white bg-custom-blue text-white ml-2 px-2 py-0 rounded">X</button>}
                   </div>
                 ))
               ) : (
@@ -309,9 +351,11 @@ export const UserProfil = () => {
             </div>
 
             {isEditMode ? (
-              <button className="mt-4 px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsModalSkillsOpen(true)}>
-              Add new skill      
-              </button>
+              <button className="mt-2 px-2 py-1 bg-custom-orange hover:bg-custom-orange-dark text-white rounded focus:outline-none focus:border-custom-orange ml-1" onClick={() => setIsModalSkillsOpen(true)}>
+              Add new skill
+            </button>
+            
+            
           ): null }
 
             
@@ -359,16 +403,16 @@ export const UserProfil = () => {
           
 
         {/* Needs management */} 
-        <div className='mt-4'>
-          <h5 className='font-bold text-lg'>Your needs</h5>
-          <div className='flex flex-wrap gap-2'>
+        <div className='flex flex-col items-center mt-4'>
+          <h5 className='font-bold text-lg ml-1'>Your needs:</h5>
+          <div className='flex flex-wrap gap-2 mt-1'>
 
             {userData.needs && userData.needs.length > 0 ? (
               userData.needs.map((need, index) => (
-                <div key={index} className="flex bg-custom-blue hover:bg-custom-blue-dark text-white items-center px-2 py-1">
+                <div key={index} className="flex bg-custom-blue hover:bg-custom-blue-dark text-white items-center px-2 py-2 rounded ml-1">
 
                   <p>{need.name}</p>
-                  {isEditMode ? <button onClick={() => handleDeleteNeedAl(need)} className={style.deleteBTn}>X</button> : null}
+                  {isEditMode ? <button onClick={() => handleDeleteNeedAl(need)} className="border border-white bg-custom-blue text-white ml-2 px-2 py-0 rounded">X</button> : null}
                 </div>
               ))
             ) : (
@@ -378,7 +422,7 @@ export const UserProfil = () => {
 
 
           {isEditMode ? (
-              <button className="mt-4 px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsModalNeedsOpen(true)}>
+              <button className="mt-2 px-2 py-1 bg-custom-orange hover:bg-custom-orange-dark text-white rounded focus:outline-none focus:border-custom-orange ml-1" onClick={() => setIsModalNeedsOpen(true)}>
               Add new need      
               </button>
           ): null }
@@ -404,7 +448,7 @@ export const UserProfil = () => {
               <label htmlFor="needSelect">Select Need:</label>
               <select id="needSelect" multiple value={selectedNeeds} onChange={handleSelectedNeedChange}>
                 {availableNeeds.map((need) => (
-                  <option key={need._id} value={need.name} onClick={() => setUpdatedNeeds([...updatedNeeds, ...selectedNeeds])}>
+                  <option key={need._id} value={need.name} onClick={() => setUpdatedNeeds([...updatedNeeds, ...selectedNeeds])} disabled={userData.needs.some((userNeed) => userNeed.name === need.name)}>
                     {need.name}
                   </option>
                 ))}
@@ -412,8 +456,11 @@ export const UserProfil = () => {
               </div>
             
             <button
-              className="px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded mt-4"
+              className={`px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded mt-4 ${
+                selectedNeeds.length === 0 ? 'cursor-not-allowed opacity-50' : ''
+              }`}
               onClick={handleUpdateNeeds}
+              disabled={selectedNeeds.length === 0}
             >
               Add new need
             </button>
@@ -424,10 +471,10 @@ export const UserProfil = () => {
     ) : null}
 
     {isEditMode ? (
-      <button  className="px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded" onClick={handleUpdateProfile}>Save Profile</button>
+      <button  className="w-1/3 mt-6 px-3 py-1 bg-custom-orange hover:bg-custom-blue-dark text-white rounded  mb-6" onClick={handleUpdateProfile}>Save Profile</button>
     ) : (
       
-      <button className="px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
+      <button className="w-1/3 mt-8 mb-4 px-3 py-1 bg-custom-orange hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
     )}
     <Toaster
       position="bottom-center"

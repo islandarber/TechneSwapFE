@@ -13,8 +13,9 @@ import {OtherUserProfil} from './views/OtherUserProfil'
 function App() {
 
   return (
-    <>
+  <div className='app_container'>
     <Navbar />
+    <div className='content'>
      <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
@@ -22,11 +23,10 @@ function App() {
       <Route path="/discover" element={<Discover />} />
       <Route path="/discover/:id" element={<OtherUserProfil />} />
       <Route path=":id" element={<UserProfil />} />
-      
-      
      </Routes>
+    </div>
       <Footer />
-    </>
+    </div>
   )
 }
 

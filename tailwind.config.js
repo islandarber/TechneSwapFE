@@ -5,8 +5,9 @@ export default {
     extend: {
       colors: {
         'custom-blue': '#3e8fb0',
-        'customgrey': '#f5f5f5',
-        'myPurple': '#6a0572',
+        'custom-grey': '#f5f5f5',
+        'custom-purple': '#6a0572',
+        'custom-orange': '#ff7f50',
       },
     },
   },
