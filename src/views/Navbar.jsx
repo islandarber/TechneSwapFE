@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import techneSwapLogo from '../assets/TechneSwap-logos_transparentnew.png';
 import './Stylesheets/Navbar.css';
@@ -8,10 +8,17 @@ export const Navbar = () => {
   const Navigate = useNavigate();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [user, setUser] = useState({});
+  const navbarRef = useRef(null);
 
   const handleLinkClick = (path) => {
     Navigate(path);
     setIsNavOpen(false); // Close the navbar after clicking a link
+  };
+
+  const handleOutsideClick = (event) => {
+    if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+      setIsNavOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -22,16 +29,21 @@ export const Navbar = () => {
       } catch (error) {
         console.error(error);
       }
-    }
+    };
     fetchData();
-  }, []);
 
+    document.addEventListener('click', handleOutsideClick);
 
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []); // Empty dependency array ensures that useEffect runs only once
 
   return (
-    <div className="navbar">
-      <img src={techneSwapLogo} alt="logologin" className="logoimg" onClick={()=>Navigate('/')}/>
-
+    <div className="navbar" ref={navbarRef}>
+      <img src={techneSwapLogo} alt="logologin" className="logoimg" onClick={() => Navigate('/')} />
+  
       <div className="flex items-center justify-between border-customgrey-400 mr-2">
         <nav>
           <section className="MOBILE-MENU flex lg:hidden">
@@ -43,7 +55,7 @@ export const Navbar = () => {
               <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
               <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
             </div>
-
+  
             <div className={isNavOpen ? "showMenuNav" : "hideMenuNav"}>
               <div
                 className="CROSS-ICON absolute top-0 right-0 px-1 py-1 pt-0"
@@ -78,7 +90,7 @@ export const Navbar = () => {
               </ul>
             </div>
           </section>
-
+  
           <ul className="DESKTOP-MENU hidden space-x-8 lg:flex">
             <li className="my-8">
               <a onClick={() => handleLinkClick('/')}>Home</a>
@@ -119,4 +131,5 @@ export const Navbar = () => {
       </div>
     </div>
   );
+  
 };
