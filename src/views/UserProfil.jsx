@@ -46,6 +46,7 @@ export const UserProfil = () => {
           lastName: userResponse.data.lastName,
           email: userResponse.data.email,
           location: userResponse.data.location,
+          description: userResponse.data.description,
           skills: userResponse.data.skills,
           needs: userResponse.data.needs,
           img: userResponse.data.img,
@@ -215,6 +216,7 @@ export const UserProfil = () => {
     formData.append('lastName', userData.lastName);
     formData.append('email', userData.email);
     formData.append('location', userData.location);
+    formData.append('description', userData.description);
     formData.append('skills', JSON.stringify(userData.skills));
     formData.append('needs', JSON.stringify(userData.needs));
 
@@ -302,6 +304,16 @@ export const UserProfil = () => {
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 mb-2 rounded-md focus:outline-none focus:border-orange-500"
             />
+
+            <label htmlFor="description">About me :</label>
+            <textarea
+              name="description"
+              id="description"
+              cols="30"
+              rows="10"
+              defaultValue={userData.description}
+              className="w-full border border-gray-300 p-2 mb-2 rounded-md focus:outline-none focus:border-orange-500"
+              onChange={handleChange}></textarea>
           </div>
           
           
@@ -310,8 +322,14 @@ export const UserProfil = () => {
             <div className='flex flex-col items-center text-2xl mb-4 mt-4'>
             <p className='mb-2 text-custom-blue-dark font-bold'>{userData.firstName}</p>
             <p className='mb-2 text-custom-blue-dark font-bold'>{userData.lastName}</p>
-            <p className='mb-2 text-custom-blue-dark'>{userData.email}</p>
-            <p className='mb-2 text-custom-blue-dark'>{userData.location}</p>
+            <p className='mb-2 text-custom-blue-dark text-base'><span>
+                <span role="img" aria-label="Location Emoji">
+                  ⚲
+                </span>{" "}
+                {userData.location}
+              </span></p>
+            <p className='mb-2 text-custom-blue-dark text-base'>{userData.email}</p>
+            <p className='mb-2 text-center text-custom-blue-dark m-6 text-base'>{userData.description}</p>
           </div>
 
           )}
@@ -386,7 +404,7 @@ export const UserProfil = () => {
 
         {/* Needs management */} 
         <div className='flex flex-col items-center mt-4'>
-          <h5 className='font-bold text-lg ml-1'>Your needs</h5>
+          <h5 className='font-bold text-lg ml-1'>Your needs:</h5>
           <div className='flex flex-wrap gap-2 mt-1'>
 
             {userData.needs && userData.needs.length > 0 ? (
@@ -438,8 +456,11 @@ export const UserProfil = () => {
               </div>
             
             <button
-              className="px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded mt-4"
+              className={`px-4 py-2 bg-custom-blue hover:bg-custom-blue-dark text-white rounded mt-4 ${
+                selectedNeeds.length === 0 ? 'cursor-not-allowed opacity-50' : ''
+              }`}
               onClick={handleUpdateNeeds}
+              disabled={selectedNeeds.length === 0}
             >
               Add new need
             </button>
@@ -453,7 +474,7 @@ export const UserProfil = () => {
       <button  className="w-1/3 mt-6 px-3 py-1 bg-custom-orange hover:bg-custom-blue-dark text-white rounded  mb-6" onClick={handleUpdateProfile}>Save Profile</button>
     ) : (
       
-      <button className="w-1/3 mt-8 px-3 py-1 bg-custom-orange hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
+      <button className="w-1/3 mt-8 mb-4 px-3 py-1 bg-custom-orange hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
     )}
     <Toaster
       position="bottom-center"
