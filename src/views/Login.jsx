@@ -34,7 +34,7 @@ export const Login = () => {
 
   return (
     <div className={style.loginPage}>
-      {error ? <p className={style.error}>{error}</p> :
+      {error && <p className={style.error}>{error.message}</p> }
       <>
       <form className={style.formlogin} onSubmit={handleSubmit}>
         <label>
@@ -55,7 +55,7 @@ export const Login = () => {
         <p>Not an acount yet? <a onClick={() => Navigate('/register')}>Sign Up here!</a></p>
       </div>
       </>
-      }
+
       
     </div>
   )

@@ -7,7 +7,7 @@ import toast, {Toaster} from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext';
 
 export const UserProfil = () => {
-  const {user, token} = useAuth();
+  const {user, token, updateUser} = useAuth();
 
   const [categories, setCategories] = useState([]);
   const notify = () => toast('Account updated successfully');
@@ -223,28 +223,8 @@ export const UserProfil = () => {
     formData.append('description', userData.description);
     formData.append('skills', JSON.stringify(userData.skills));
     formData.append('needs', JSON.stringify(userData.needs));
-
-      const updatedUser = async () => {
-        try {
-          const response = await axios.put(`http://localhost:8000/users/update/${id}`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          console.log('User response', response.data);
-          notify();
-        } catch (error) {
-          if (error.response) {
-            setError(error.response.data);
-          } else if (error.request) {
-            setError('No response received');
-          } else {
-            console.error('Error setting up the request', error.message);
-          }
-        }
-      };
-      updatedUser();
-      setIsEditMode(!isEditMode);
+    updateUser({formData, notify, setError });
+    setIsEditMode(!isEditMode);
   };
 
   

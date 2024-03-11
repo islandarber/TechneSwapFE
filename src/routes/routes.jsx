@@ -12,7 +12,7 @@ export const publicRoutes = [
 ];
 
 export const privateRoutes = [
-      { path: '/', element: <UserProfil /> },
+      { path: 'user', element: <UserProfil /> },
       { path: 'discover', element: <Discover /> },
       { path: 'discover/:id', element: <OtherUserProfil /> },
 ];

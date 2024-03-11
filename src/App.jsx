@@ -23,14 +23,6 @@ function App() {
 
       <Route path="/not-found" element={<NotFound />} />
       <Route path="*" element={<Navigate to="/not-found" replace/>} />
-
-
-      {/* <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/discover" element={<Discover />} />
-      <Route path="/discover/:id" element={<OtherUserProfil />} />
-      <Route path=":id" element={<UserProfil />} /> */}
      </Routes>
     </div>
       <Footer />

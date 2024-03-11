@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 
 export const OtherUserProfil = () => {
   const [user, setUser] = useState({});
   const { id } = useParams();
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponce = await axios.get(`http://localhost:8000/users/${id}`);
+        const userResponce = await axios.get(`http://localhost:8000/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
         setUser(userResponce.data);
+        console.log("response after fetching Data",userResponce.data);
       } catch (error) {
         console.error(error);
       }

@@ -73,15 +73,38 @@ export const AuthProvider = ({ children }) => {
           logout()
           
         } 
-
       }
     }
     
     fetchUser()
   }, [token])
+
+
+  const updateUser = async ({formData, notify, setError }) => {
+    try {
+      console.log("im isnide update user")
+      const response = await axios.put('http://localhost:8000/users/update/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('User response', response.data);
+      setUser(response.data);
+      notify();
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data);
+      } else if (error.request) {
+        setError('No response received');
+      } else {
+        console.error('Error setting up the request', error.message);
+      }
+    }
+  };
   
   return (
-    <AuthContext.Provider value={{user, token, login, logout}}>
+    <AuthContext.Provider value={{user, token, login, logout, updateUser}}>
       {children}
     </AuthContext.Provider>
   );

@@ -26,19 +26,6 @@ export const Navbar = () => {
   console.log(user);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userResponce = await axios.get('http://localhost:8000/users/user', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(userResponce.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
 
     document.addEventListener('click', handleOutsideClick);
 
