@@ -1,7 +1,7 @@
 import React from 'react'
 import style from './Stylesheets/NavbarDiscover.module.css';
 
-export const NavbarDiscover = ({setShowAll}) => {
+export const NavbarDiscover = ({setShowAll, showAll}) => {
 
 
   return (

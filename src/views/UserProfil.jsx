@@ -4,8 +4,11 @@ import { useParams } from 'react-router-dom';
 import style from './Stylesheets/UserProfile.module.css';
 import Modal from '../components/Modal';
 import toast, {Toaster} from 'react-hot-toast'
+import { useAuth } from '../context/AuthContext';
 
 export const UserProfil = () => {
+  const {user, token} = useAuth();
+
   const [categories, setCategories] = useState([]);
   const notify = () => toast('Account updated successfully');
 
@@ -28,16 +31,17 @@ export const UserProfil = () => {
   const [isModalNeedsOpen, setIsModalNeedsOpen] = useState(false);
 
   
-
-  const { id } = useParams();
-
-
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponse = await axios.get(`http://localhost:8000/users/${id}`);
+        const userResponse = await axios.get(`http://localhost:8000/users/user`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const categoriesResponse = await axios.get('http://localhost:8000/categories');
 
         setCategories(categoriesResponse.data);

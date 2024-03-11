@@ -1,28 +1,36 @@
 import './App.css'
-import {Routes, Route} from 'react-router-dom'
-import { LandingPage } from './views/LandingPage'
-import { Login } from './views/Login'
-import { Register } from './views/Register'
+import {Routes, Route, Navigate} from 'react-router-dom'
 import { Navbar } from './views/Navbar'
 import Footer from './views/Footer'
-import { UserProfil } from './views/UserProfil'
-import { Discover } from './views/Discover'
-import {OtherUserProfil} from './views/OtherUserProfil'
-
+import NotFound from './views/NotFound'
+import { privateRoutes, publicRoutes } from './routes/routes'
+import {useAuth} from './context/AuthContext'
 
 function App() {
+  const {token} = useAuth();
 
   return (
   <div className='app_container'>
     <Navbar />
     <div className='content'>
      <Routes>
-      <Route path="/" element={<LandingPage />} />
+      {publicRoutes.map(({path, element}) => (
+        <Route key={path} path={path} element={!token ? element : <Navigate to='/'/>} />
+      ))}
+      {privateRoutes.map(({path, element}) => (
+          <Route key={path} path={path} element={token ? element : <Navigate to="/login" />}/>
+        ))}
+
+      <Route path="/not-found" element={<NotFound />} />
+      <Route path="*" element={<Navigate to="/not-found" replace/>} />
+
+
+      {/* <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/discover" element={<Discover />} />
       <Route path="/discover/:id" element={<OtherUserProfil />} />
-      <Route path=":id" element={<UserProfil />} />
+      <Route path=":id" element={<UserProfil />} /> */}
      </Routes>
     </div>
       <Footer />

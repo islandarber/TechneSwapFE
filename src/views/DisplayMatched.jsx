@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export const DisplayMatched = () => {
   const navigate = useNavigate();
   const [matchedUsers, setMatchedUsers] = useState([]);
 
-  const user = {
-    _id: "65dcaeda6e111616d6f31868",
-    firstName: "Christina",
-    lastName: "Vekri",
-    needs: [{ _id: "65dda9f505218afefe6258d1", name: "Python", category: "65dda850a018265f548e750a" }, { _id: "65ddaa0d05218afefe6258d7", name: "Spanish", category: "65dda86eca551a54770d8848" }],
-    skills: [{ _id: "65dda9ac05218afefe6258ce", name: "Javascript", category: "65dda850a018265f548e750a" }, { _id: "65ddaa0105218afefe6258d4", name: "English", category: "65dda86eca551a54770d8848" }],
-    visibility: true,
-    location: "Berlin, Germany"
-  };
+  const { user, token } = useAuth();
+  // const user = {
+  //   _id: "65dcaeda6e111616d6f31868",
+  //   firstName: "Christina",
+  //   lastName: "Vekri",
+  //   needs: [{ _id: "65dda9f505218afefe6258d1", name: "Python", category: "65dda850a018265f548e750a" }, { _id: "65ddaa0d05218afefe6258d7", name: "Spanish", category: "65dda86eca551a54770d8848" }],
+  //   skills: [{ _id: "65dda9ac05218afefe6258ce", name: "Javascript", category: "65dda850a018265f548e750a" }, { _id: "65ddaa0105218afefe6258d4", name: "English", category: "65dda86eca551a54770d8848" }],
+  //   visibility: true,
+  //   location: "Berlin, Germany"
+  // };
 
   useEffect(() => {
     const fetchMatchedUsers = async () => {
@@ -29,6 +31,7 @@ export const DisplayMatched = () => {
           params: reqBody,
           headers: {
             'Content-Type': 'application/json',
+            Authorization : `Bearer ${token}`,
           },
         });
 
@@ -62,6 +65,8 @@ export const DisplayMatched = () => {
   }, []);
 
   return (
+    <>
+    {!matchedUsers.length === 0 ?
     <div>
       <h1 className="text-2xl text-center text-custom-blue font-bold mt-9 mb-4">Your matches:</h1>
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5 m-7">
@@ -223,5 +228,9 @@ export const DisplayMatched = () => {
         ))}
       </div>
     </div>
+    : <p className="text-center text-2xl text-custom-blue font-bold mt-9">No matches found</p>}
+    {user.skills && user.skills.length === 0 && <p className="text-center text-xl text-custom-blue mt-9"> Please update your skills. </p>}
+    {user.needs && user.needs.length === 0 && <p className="text-center text-xl text-custom-blue mt-9"> Please update your needs. </p>}
+    </>
   );
 };
