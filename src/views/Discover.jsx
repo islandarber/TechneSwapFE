@@ -4,15 +4,18 @@ import style from './Stylesheets/Discover.module.css';
 import { DisplayMatched } from './DisplayMatched';
 import {NavbarDiscover} from './NavbarDiscover';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 
 
 
 export const Discover = () => {
+  const {user, token } = useAuth();
+
   const navigate = useNavigate();
   const [allUsers, setAllUsers] = useState([]);
 
-  const [showAll, setShowAll] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -26,22 +29,16 @@ export const Discover = () => {
     keyword: ""
   });
 
-  const user = {
-    _id:"65dcaeda6e111616d6f31868",
-    firstName:"Christina",
-    lastName:"Vekri",
-    needs:[{_id: "65dda9f505218afefe6258d1", name: "Python", category: "65dda850a018265f548e750a",},{ _id: "65ddaa0d05218afefe6258d7", name: "Spanish", category: "65dda86eca551a54770d8848", }],
-    skills:[{_id: "65dda9ac05218afefe6258ce", name: "Javascript", category: "65dda850a018265f548e750a",},{ _id: "65ddaa0105218afefe6258d4", name: "English", category: "65dda86eca551a54770d8848",}],
-    visibility:true,
-    location:"Berlin, Germany"
-  }
-
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    console.log("im inside get users general")
     try {
       setLoading(true);
       const categoryresponse = await axios.get('http://localhost:8000/categories');
-      const userAllResponce = await axios.get('http://localhost:8000/users');
+      const userAllResponce = await axios.get('http://localhost:8000/users', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
       setAllUsers(userAllResponce.data);
       console.log("response after fetching Data",userAllResponce.data);
       setCategories(categoryresponse.data);
@@ -56,8 +53,11 @@ export const Discover = () => {
       setLoading(false);
     }
   }
-  fetchData();
+  
+  useEffect(() => {
+    fetchData();
   }, []);
+  
 
   const handleSearch =  (e) => {
     setErrorResults(null);
@@ -75,9 +75,15 @@ export const Discover = () => {
       queries.push(`keyword=${formData.keyword}`);
     }
     const fetchUsers = async () => {
+      console.log("im inside get users with filters")
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8000/users?${queries.join('&')}`);
+        const response = await axios.get(`http://localhost:8000/users?${queries.join('&')}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        
+        });
         setAllUsers(response.data);
         console.log("response after fetching Data",response.data);
       } catch (error) {
@@ -106,7 +112,7 @@ export const Discover = () => {
 
   return (
     <div>
-      <NavbarDiscover setShowAll={setShowAll} />
+      <NavbarDiscover setShowAll={setShowAll}/>
       {showAll ? <div className={style.discoverViewAll}>
         <h1 className='mx-4'>Discover the world of TechneSwap!</h1>
         <form onSubmit={handleSearch}>

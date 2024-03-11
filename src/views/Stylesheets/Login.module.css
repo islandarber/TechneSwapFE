@@ -19,6 +19,7 @@
   margin: auto;
   padding: 30px;
   background-color: #3e8fb0;
+  box-shadow: 0 0 5px 0 #f9a03f;
   border-radius: 10px;
 }
 
@@ -42,7 +43,6 @@
   border: none;
   border-radius: 5px;
   background-color: #f5f5f5;
-  box-shadow: 0 0 5px 0 #3e8fb0;
 }
 
 .formlogin input:focus{

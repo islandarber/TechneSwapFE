@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import techneSwapLogo from '../assets/TechneSwap-logos_transparentnew.png';
 import './Stylesheets/Navbar.css';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 export const Navbar = () => {
+
   const Navigate = useNavigate();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [user, setUser] = useState({});
+  const {user,token, logout} = useAuth();
   const navbarRef = useRef(null);
 
   const handleLinkClick = (path) => {
@@ -21,16 +23,9 @@ export const Navbar = () => {
     }
   };
 
+  console.log(user);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userResponce = await axios.get('http://localhost:8000/users/65dcaeda6e111616d6f31868');
-        setUser(userResponce.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
 
     document.addEventListener('click', handleOutsideClick);
 
@@ -42,9 +37,9 @@ export const Navbar = () => {
 
   return (
     <div className="navbar" ref={navbarRef}>
-      <img src={techneSwapLogo} alt="logologin" className="logoimg" onClick={() => Navigate('/')} />
+      <img src={techneSwapLogo} alt="logologin" className="logoimg" />
   
-      <div className="flex items-center justify-between border-customgrey-400 mr-2">
+      { user && <div className="flex items-center justify-between border-customgrey-400 mr-2">
         <nav>
           <section className="MOBILE-MENU flex lg:hidden">
             <div
@@ -77,7 +72,21 @@ export const Navbar = () => {
               <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center justify-between my-3">
                 <li className='mb-7'>
                   <div className='flex flex-col items-center'>
-                    <img src={user && user.img} alt="user" className="h-16 w-16 rounded-full object-cover" onClick={() => handleLinkClick(`/${user._id}`)} />
+                  {user.img ? (
+                      <img
+                        src={user.img}
+                        alt={user.name}
+                        className="h-16 w-16 rounded-full object-cover"
+                        onClick={() => handleLinkClick('user')}
+                      />
+                    ) : (
+                      <img
+                        src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+                        alt="avatar"
+                        className="h-16 w-16 rounded-full object-cover"
+                        onClick={() => handleLinkClick('user')}
+                      />
+                    )}
                     <p className='text-center mt-1 text-s p-1'>{user && user.firstName}</p>
                   </div>
                 </li>
@@ -85,7 +94,7 @@ export const Navbar = () => {
                   <a onClick={() => handleLinkClick('/Discover')}>Discover</a>
                 </li>
                 <li className='mb-4' >
-                  <a onClick={() => handleLinkClick('/')} className='text-black'>Log Out</a>
+                  <a onClick={logout} className='text-black'>Log Out</a>
                 </li>
               </ul>
             </div>
@@ -93,13 +102,16 @@ export const Navbar = () => {
   
           <ul className="DESKTOP-MENU hidden space-x-8 lg:flex">
             <li className="my-8">
-              <a onClick={() => handleLinkClick('/')}>Home</a>
+            <div className='flex flex-col items-center'>
+                    <img src={user && user.img} alt="user" className="h-16 w-16 rounded-full object-cover" onClick={() => handleLinkClick('/user')} />
+                    <p className='text-center mt-1 text-s p-1'>{user && user.firstName}</p>
+                  </div>
             </li>
             <li className="my-8">
               <a onClick={() => handleLinkClick('/Discover')}>Discover</a>
             </li>
             <li className="my-8">
-              <a onClick={() => handleLinkClick('/')}>Log Out</a>
+              <a onClick={logout}>Log Out</a>
             </li>
           </ul>
         </nav>
@@ -128,7 +140,7 @@ export const Navbar = () => {
             margin-right: 5px;
           }
         `}</style>
-      </div>
+      </div>}
     </div>
   );
   

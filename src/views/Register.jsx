@@ -79,7 +79,7 @@ export const Register = () => {
 
       </form>
 
-      <div>
+      <div className='mb-5'>
         <p>Already have an account? <a onClick={() => Navigate('/login')}>Login</a></p>
       </div>
 
