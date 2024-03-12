@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export const DisplayMatched = () => {
+  const api_url = import.meta.env.VITE_BACKEND_URL; 
   const navigate = useNavigate();
   const [matchedUsers, setMatchedUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -11,18 +12,18 @@ export const DisplayMatched = () => {
 
   const { user, token } = useAuth();
 
-  console.log(user);
-  
+  console.log(matchedUsers);
 
   useEffect(() => {
     const fetchMatchedUsers = async () => {
+      setMatchedUsers([]);
       try {
         const reqBody = {
           skills: user.skills,
           needs: user.needs,
         };
 
-        const matchedresponse = await axios.get('http://localhost:8000/users', {
+        const matchedresponse = await axios.get(`${api_url}/users`, {
           params: reqBody,
           headers: {
             'Content-Type': 'application/json',
@@ -48,9 +49,8 @@ export const DisplayMatched = () => {
             categorizedUsers.skills.push(matchedUser);
           }
         });
-
+        console.log('Matched Users:', categorizedUsers);
         setMatchedUsers(categorizedUsers);
-        console.log(categorizedUsers);
       } catch (error) {
         console.error(error);
         if (error.response) {
@@ -66,11 +66,13 @@ export const DisplayMatched = () => {
     fetchMatchedUsers();
   }, []);
 
+  const hasMatches = Object.values(matchedUsers).some((match) => match.length > 0);
+
   return (
     <>
     {loading ? <p className="text-m text-custom-blue font-bold mb-2">Loading...</p> :
       <>
-      {(matchedUsers.both?.length > 0 || matchedUsers.skills?.length > 0 || matchedUsers.needs?.length > 0) ?
+      { hasMatches?
   // Render matches
       <div className='flex flex-col items-center gap-2 mt-5'>
         <button className='bg-custom-blue rounded p-2 text-sm text-white' onClick={() => navigate('/user')}>Update your Profile</button>

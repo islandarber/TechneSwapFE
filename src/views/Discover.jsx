@@ -29,12 +29,14 @@ export const Discover = () => {
     keyword: ""
   });
 
+  const api_url = import.meta.env.VITE_BACKEND_URL;
+
   const fetchData = async () => {
     console.log("im inside get users general")
     try {
       setLoading(true);
-      const categoryresponse = await axios.get('http://localhost:8000/categories');
-      const userAllResponce = await axios.get('http://localhost:8000/users', {
+      const categoryresponse = await axios.get(`${api_url}/categories`);
+      const userAllResponce = await axios.get(`${api_url}/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -78,7 +80,7 @@ export const Discover = () => {
       console.log("im inside get users with filters")
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8000/users?${queries.join('&')}`, {
+        const response = await axios.get(`${api_url}/users?${queries.join('&')}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           }

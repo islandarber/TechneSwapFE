@@ -7,6 +7,7 @@ import toast, {Toaster} from 'react-hot-toast'
 export const Register = () => {
   const Navigate = useNavigate()
   const notify = () => toast('Account created successfully');
+  const api_url = import.meta.env.VITE_BACKEND_URL;
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -25,7 +26,7 @@ export const Register = () => {
     e.preventDefault();
     if (formData.password === formData.password2) {
       try {
-        const response = await axios.post('http://localhost:8000/users/register', {
+        const response = await axios.post(`${api_url}/users/register`, {
           firstName: formData.firstName,
           lastName: formData.lastName,
           email: formData.email,
