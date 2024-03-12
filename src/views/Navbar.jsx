@@ -91,7 +91,7 @@ export const Navbar = () => {
                   </div>
                 </li>
                 <li className='mb-4'>
-                  <a onClick={() => handleLinkClick('/Discover')}>Discover</a>
+                  <a onClick={() => handleLinkClick('/discover')}>Discover</a>
                 </li>
                 <li className='mb-4' >
                   <a onClick={logout} className='text-black'>Log Out</a>
@@ -101,17 +101,17 @@ export const Navbar = () => {
           </section>
   
           <ul className="DESKTOP-MENU hidden space-x-8 lg:flex">
-            <li className="my-8">
-            <div className='flex flex-col items-center'>
+            <li>
+            <div className='flex items-center'>
                     <img src={user && user.img} alt="user" className="h-16 w-16 rounded-full object-cover" onClick={() => handleLinkClick('/user')} />
-                    <p className='text-center mt-1 text-s p-1'>{user && user.firstName}</p>
+                    <p className='text-center text-gray mt-1 text-s p-1' >{user && user.firstName}</p>
                   </div>
             </li>
-            <li className="my-8">
-              <a onClick={() => handleLinkClick('/Discover')}>Discover</a>
+            <li>
+              <a onClick={() => handleLinkClick('/discover')} className='text-grey'>Discover</a>
             </li>
-            <li className="my-8">
-              <a onClick={logout}>Log Out</a>
+            <li >
+              <a onClick={logout} className='text-grey'>Log Out</a>
             </li>
           </ul>
         </nav>

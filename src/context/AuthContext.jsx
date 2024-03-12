@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     const api_url = import.meta.env.VITE_BACKEND_URL;
     try {
      
-      const response = await axios.post(`http://localhost:8000/users/login`, formData, {
+      const response = await axios.post(`${api_url}/users/login`, formData, {
         headers: { 'Content-Type': 'application/json' }
       });
 
