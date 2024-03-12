@@ -101,8 +101,8 @@ export const Navbar = () => {
           </section>
   
           <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
-  <li onClick={() => handleLinkClick('/user')} className="hover:bg-gray-200 rounded-full p-1">
-    <img src={user && user.img} alt="user" className="h-16 w-16 rounded-full object-cover border-2 border-custom-orange" />
+  <li onClick={() => handleLinkClick('/user')} >
+    <img src={user && user.img} alt="user" className="hover:border-white h-16 w-16 rounded-full object-cover border-2 border-custom-orange" />
   </li>
   <li>
     <a onClick={() => handleLinkClick('/user')} className="text-xl text-white hover:text-gray-300 cursor-pointer"> {/* Add hover:bg-custom-orange-dark for the hover effect */}
