@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       const {token, user} = response.data;
-      console.log("token:",token)
+      console.log("rd:",response.data)
       localStorage.setItem("jwt", token)
       setToken(token)
       console.log("token after setting", token)
