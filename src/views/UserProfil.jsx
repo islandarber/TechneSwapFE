@@ -33,16 +33,18 @@ export const UserProfil = () => {
   
   const [userData, setUserData] = useState({});
 
+  const api_url = import.meta.env.VITE_BACKEND_URL; 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponse = await axios.get(`http://localhost:8000/users/user`,
+        const userResponse = await axios.get(`${api_url}/users/user`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        const categoriesResponse = await axios.get('http://localhost:8000/categories');
+        const categoriesResponse = await axios.get(`${api_url}/categories`);
 
         setCategories(categoriesResponse.data);
         setUserData({
@@ -88,7 +90,7 @@ export const UserProfil = () => {
 
   const handleSkillsBasedOnCat = async (e) => {
     try {
-      const skillsResponse = await axios.get(`http://localhost:8000/skills/${e.target.value}`);
+      const skillsResponse = await axios.get(`${api_url}/skills/${e.target.value}`);
       setAvailableSkills(skillsResponse.data);
     } catch (error) {
       if (error.response) {
@@ -103,7 +105,7 @@ export const UserProfil = () => {
 
   const handleNeedsBasedOnCat = async (e) => {
     try {
-      const needsResponse = await axios.get(`http://localhost:8000/skills/${e.target.value}`);
+      const needsResponse = await axios.get(`${api_url}/skills/${e.target.value}`);
       setAvailableNeeds(needsResponse.data);
     } catch (error) {
       if (error.response) {

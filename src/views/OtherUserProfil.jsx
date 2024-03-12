@@ -8,11 +8,12 @@ export const OtherUserProfil = () => {
   const [user, setUser] = useState({});
   const { id } = useParams();
   const { token } = useAuth();
+  const api_url = import.meta.env.VITE_BACKEND_URL; 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponce = await axios.get(`http://localhost:8000/users/${id}`, {
+        const userResponce = await axios.get(`${api_url}/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           }

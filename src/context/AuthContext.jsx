@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       const {token, user} = response.data;
-
+      console.log("token:",token)
       localStorage.setItem("jwt", token)
       setToken(token)
       console.log("token after setting", token)
@@ -81,9 +81,10 @@ export const AuthProvider = ({ children }) => {
 
 
   const updateUser = async ({formData, notify, setError }) => {
+    const api_url = import.meta.env.VITE_BACKEND_URL;
     try {
       console.log("im isnide update user")
-      const response = await axios.put('http://localhost:8000/users/update/', formData, {
+      const response = await axios.put(`${api_url}/users/update/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
