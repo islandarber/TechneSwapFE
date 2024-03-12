@@ -101,19 +101,23 @@ export const Navbar = () => {
           </section>
   
           <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
-  <li onClick={() => handleLinkClick('/user')} className="hover:bg-gray-200 rounded-full">
+  <li onClick={() => handleLinkClick('/user')} className="hover:bg-gray-200 rounded-full p-1">
     <img src={user && user.img} alt="user" className="h-16 w-16 rounded-full object-cover border-2 border-rose-400" />
   </li>
   <li>
-    <a onClick={() => handleLinkClick('/user')} className="text-lg bg-custom-orange p-2 text-white font-bold hover:bg-custom-orange-dark"> 
+    <a onClick={() => handleLinkClick('/user')} className="text-lg bg-custom-orange p-2 text-white font-bold hover:bg-custom-orange-dark cursor-pointer"> {/* Add hover:bg-custom-orange-dark for the hover effect */}
       {user && user.firstName}
     </a>
   </li>
   <li>
-    <a onClick={() => handleLinkClick('/discover')} className="text-white font-bold hover:text-gray-300">Discover</a>
+    <a onClick={() => handleLinkClick('/discover')} className="text-white font-bold hover:text-gray-300 cursor-pointer"> {/* Add hover:text-gray-300 for the hover effect */}
+      Discover
+    </a>
   </li>
   <li>
-    <a onClick={logout} className="text-grey font-bold hover:text-gray-300">Log Out</a>
+    <a onClick={logout} className="text-grey font-bold hover:text-gray-300 cursor-pointer"> {/* Add hover:text-gray-300 for the hover effect */}
+      Log Out
+    </a>
   </li>
 </ul>
 
