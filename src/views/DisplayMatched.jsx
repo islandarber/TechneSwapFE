@@ -70,7 +70,8 @@ export const DisplayMatched = () => {
     <>
     {loading ? <p className="text-m text-custom-blue font-bold mb-2">Loading...</p> :
       <>
-      {matchedUsers.both || matchedUsers.skills || matchedUsers.needs ?
+      {(matchedUsers.both?.length > 0 || matchedUsers.skills?.length > 0 || matchedUsers.needs?.length > 0) ?
+  // Render matches
       <div className='flex flex-col items-center gap-2 mt-5'>
         <button className='bg-custom-blue rounded p-2 text-sm text-white' onClick={() => navigate('/user')}>Update your Profile</button>
         <h1 className="text-2xl text-center text-custom-blue font-bold mt-9 mb-4">Your matches:</h1>
