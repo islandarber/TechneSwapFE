@@ -10,8 +10,6 @@ export const Login = () => {
     email: '',
     password: ''
   });
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
 
