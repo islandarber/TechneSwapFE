@@ -101,19 +101,22 @@ export const Navbar = () => {
           </section>
   
           <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
-            <li onClick={() => handleLinkClick('/user')}>
-              <img src={user && user.img} alt="user" className="h-16 w-16 rounded-full object-cover border-2 border-rose-400"  />
-            </li>
-            <li >
-              <a onClick={() => handleLinkClick('/user')} className='text-lg text-custom-orange font-bold'>{user && user.firstName}</a>
-            </li>
-            <li>
-              <a onClick={() => handleLinkClick('/discover')} className='text-white font-bold'>Discover</a>
-            </li>
-            <li >
-              <a onClick={logout} className='text-grey font-bold'>Log Out</a>
-            </li>
-          </ul>
+  <li onClick={() => handleLinkClick('/user')} className="hover:bg-gray-200 rounded-full">
+    <img src={user && user.img} alt="user" className="h-16 w-16 rounded-full object-cover border-2 border-rose-400" />
+  </li>
+  <li>
+    <a onClick={() => handleLinkClick('/user')} className="text-lg bg-custom-orange p-2 text-white font-bold hover:bg-custom-orange-dark"> 
+      {user && user.firstName}
+    </a>
+  </li>
+  <li>
+    <a onClick={() => handleLinkClick('/discover')} className="text-white font-bold hover:text-gray-300">Discover</a>
+  </li>
+  <li>
+    <a onClick={logout} className="text-grey font-bold hover:text-gray-300">Log Out</a>
+  </li>
+</ul>
+
         </nav>
         {/* Your existing styles */}
         <style>{`
