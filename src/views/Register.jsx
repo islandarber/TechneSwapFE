@@ -24,7 +24,11 @@ export const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.password === formData.password2) {
+    if (formData.length === 0) {
+      setError({ message: "Please fill in all the required fields" })
+      return;
+    }
+      if (formData.password === formData.password2) {
       try {
         const response = await axios.post(`${api_url}/users/register`, {
           firstName: formData.firstName,
