@@ -15,7 +15,7 @@ export const Discover = () => {
   const navigate = useNavigate();
   const [allUsers, setAllUsers] = useState([]);
 
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(true);
 
   const [loading, setLoading] = useState(false);
 
@@ -160,7 +160,7 @@ export const Discover = () => {
         </form>
         <div>
   <h1 className="text-2xl font-bold mb-4">Results</h1>
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 m-3">
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-5 m-3">
     {errorResults ? (
       <p className="text-red-500">{errorResults.message}</p>
     ) : loading ? (
@@ -169,21 +169,21 @@ export const Discover = () => {
       allUsers.map((user, index) => (
         <div
           key={index}
-          className="bg-white p-2 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
+          className="bg-white p-4 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
           onClick={() => navigate(`/discover/${user._id}`)}
         >
           <div className="mb-4">
             {user.img ? (
               <img
-                src={user.img}
-                alt={user.name}
-                className="w-full h-24 object-cover rounded-md"
-              />
+              src={user.img}
+              alt={user.name}
+              className="w-full h-40 sm:h-40 md:h-16 lg:h-16 xl:h-12 object-cover rounded-md"
+            />
             ) : (
               <img
                 src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
                 alt="avatar"
-                className="w-full h-24 object-cover rounded-md"
+                className="w-full h-40 sm:h-40 md:h-16 lg:h-16 xl:h-12 object-cover rounded-md"
               />
             )}
           </div>

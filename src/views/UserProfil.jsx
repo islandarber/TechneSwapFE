@@ -54,6 +54,7 @@ export const UserProfil = () => {
           skills: userResponse.data.skills,
           needs: userResponse.data.needs,
           img: userResponse.data.img,
+          visibility: userResponse.data.visibility,
         });
       } catch (error) {
         if (error.response) {
@@ -72,13 +73,16 @@ export const UserProfil = () => {
   }, []); 
   
 
- const handleChange = (e) => {
-  const {name, value} = e.target;
-  setUserData((prevData) => ({
-    ...prevData,
-    [name]: name === 'img' ? e.target.files[0] : value,
-  }));
- };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const newValue = name === 'visibility' ? (value === 'public' ? true : false) : value;
+  
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: name === 'img' ? e.target.files[0] : newValue,
+    }));
+  };
+  
 
  console.log(userData, 'userdata')
 
@@ -221,6 +225,7 @@ export const UserProfil = () => {
     formData.append('email', userData.email);
     formData.append('location', userData.location);
     formData.append('description', userData.description);
+    formData.append('visibility', userData.visibility);
     formData.append('skills', JSON.stringify(userData.skills));
     formData.append('needs', JSON.stringify(userData.needs));
     updateUser({formData, notify, setError });
@@ -298,6 +303,19 @@ export const UserProfil = () => {
               defaultValue={userData.description}
               className="w-full border border-gray-300 p-2 mb-2 rounded-md focus:outline-none focus:border-orange-500"
               onChange={handleChange}></textarea>
+
+            <label className="block mb-1 text-xs font-bold text-gray-600">Visibility</label>
+            <select
+              name="visibility"
+              id="visibility"
+              defaultValue={userData.visibility ? "public" : "private"}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 mb-2 rounded-md focus:outline-none focus:border-orange-500"
+            >
+              <option value="" disabled selected>Select Visibility</option>
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
           </div>
           
           
@@ -313,7 +331,7 @@ export const UserProfil = () => {
                 {userData.location}
               </span></p>
             <p className='mb-2 text-custom-blue-dark text-base'>{userData.email}</p>
-            <p className='mb-2 text-center text-custom-blue-dark m-6 text-base'>{userData.description}</p>
+            <p className='mb-2 text-center text-custom-blue-dark m-6 text-base italic'>Your description : <br />{userData.description}</p>
           </div>
 
           )}
@@ -353,7 +371,7 @@ export const UserProfil = () => {
               <h2 className="text-lg font-bold mb-4">Select new skill</h2>
               <div className={style.selections}>
                 <label htmlFor="categorySelect">Select Category:</label>
-                <select id="categorySelect" onChange={(e) => handleSkillsBasedOnCat(e)}>
+                <select className='focus:outline-none' id="categorySelect" onChange={(e) => handleSkillsBasedOnCat(e)}>
                 <option value="" disabled selected>Category</option>
                   {categories.map((category) => (
                     <option key={category._id} value={category._id}>
@@ -387,15 +405,15 @@ export const UserProfil = () => {
           
 
         {/* Needs management */} 
-        <div className='flex flex-col items-center mt-4'>
+        <div className='flex flex-col justify-center items-center mt-4'>
           <h5 className='font-bold text-lg ml-1'>Your needs :</h5>
-          <div className='flex flex-wrap gap-2 mt-1'>
+          <div className='flex flex-wrap gap-2 mt-1 justify-center'>
 
             {userData.needs && userData.needs.length > 0 ? (
               userData.needs.map((need, index) => (
-                <div key={index} className="flex bg-custom-blue hover:bg-custom-blue-dark text-white items-center px-2 py-2 rounded ml-1">
+                <div key={index} className="flex bg-custom-blue hover:bg-custom-blue-dark text-white items-center px-2 py-2 rounded m-1">
 
-                  <p>{need.name}</p>
+                  <p>{need.name ? need.name : need}</p>
                   {isEditMode ? <button onClick={() => handleDeleteNeedAl(need)} className="border border-white bg-custom-blue text-white ml-2 px-2 py-0 rounded">X</button> : null}
                 </div>
               ))
@@ -455,10 +473,10 @@ export const UserProfil = () => {
     ) : null}
 
     {isEditMode ? (
-      <button  className="w-1/3 mt-9 px-3 py-1 bg-custom-orange hover:bg-custom-blue-dark text-white rounded  mb-6" onClick={handleUpdateProfile}>Save Profile</button>
+      <button  className="w-1/3 mt-9 px-4 py-3 bg-custom-orange hover:bg-custom-blue-dark text-white rounded  mb-6" onClick={handleUpdateProfile}>Save Profile</button>
     ) : (
       
-      <button className="w-1/3 mt-8 mb-4 px-3 py-1 bg-custom-orange hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
+      <button className="w-1/3 mt-8 mb-4 px-4 py-3 bg-custom-orange hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
     )}
     <Toaster
       position="bottom-center"

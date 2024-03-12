@@ -70,22 +70,23 @@ export const DisplayMatched = () => {
     <>
     {loading ? <p className="text-m text-custom-blue font-bold mb-2">Loading...</p> :
       <>
-      {matchedUsers.both || matchedUsers.skills || matchedUsers.needs ?
+      {(matchedUsers.both?.length > 0 || matchedUsers.skills?.length > 0 || matchedUsers.needs?.length > 0) ?
+  // Render matches
       <div className='flex flex-col items-center gap-2 mt-5'>
         <button className='bg-custom-blue rounded p-2 text-sm text-white' onClick={() => navigate('/user')}>Update your Profile</button>
         <h1 className="text-2xl text-center text-custom-blue font-bold mt-9 mb-4">Your matches:</h1>
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5 m-7">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5 m-7">
           {matchedUsers.both && matchedUsers.both.map((user, index) => (
             <div
               key={index}
-              className="bg-white p-2 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
+              className="bg-white p-4 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
               onClick={() => navigate(`/discover/${user._id}`)}
             >
               <div className="mb-4">
                 <img
                   src={user.img ? user.img : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"}
                   alt={user.name}
-                  className="w-full h-24 object-cover rounded-md"
+                  className="w-full h-40 sm:h-40 md:h-16 lg:h-16 xl:h-12 object-cover rounded-md"
                 />
               </div>
                 <h2 className="text-xl font-bold text-custom-orange mb-2">{user.firstName}</h2>
@@ -129,14 +130,14 @@ export const DisplayMatched = () => {
           {matchedUsers.skills && matchedUsers.skills.map((user, index) => (
             <div
               key={index}
-              className="bg-white p-2 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
+              className="bg-white p-4 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
               onClick={() => navigate(`/discover/${user._id}`)}
             >
               <div className="mb-4">
                 <img
                   src={user.img ? user.img : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"}
                   alt={user.name}
-                  className="w-full h-24 object-cover rounded-md"
+                  className="w-full h-40 sm:h-40 md:h-16 lg:h-16 xl:h-12 object-cover rounded-md"
                 />
               </div>
                 <h2 className="text-xl font-bold text-custom-orange mb-2">{user.firstName}</h2>
@@ -181,14 +182,14 @@ export const DisplayMatched = () => {
           {matchedUsers.needs && matchedUsers.needs.map((user, index) => (
             <div
               key={index}
-              className="bg-white p-2 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
+              className="bg-white p-4 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
               onClick={() => navigate(`/discover/${user._id}`)}
             >
               <div className="mb-4">
                 <img
                   src={user.img ? user.img : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"}
                   alt={user.name}
-                  className="w-full h-24 object-cover rounded-md"
+                  className="w-full h-40 sm:h-40 md:h-16 lg:h-16 xl:h-12 object-cover rounded-md"
                 />
               </div>
                 <h2 className="text-xl font-bold text-custom-orange mb-2">{user.firstName}</h2>
@@ -233,7 +234,7 @@ export const DisplayMatched = () => {
           ))}
         </div>
       </div>
-      : <p className="text-center text-2xl text-custom-blue font-bold mt-9">No matches found</p>}
+      : <p className="text-center text-2xl text-custom-blue font-bold mt-9">Sorry, no matches for you 😞 </p>}
       {user.skills && user.skills.length === 0 && <p className="text-center text-xl text-custom-orange mt-9"> Please update your skills. </p>}
       {user.needs && user.needs.length === 0 && <p className="text-center text-xl text-custom-orange mt-9"> Please update your needs. </p>}
       </>
