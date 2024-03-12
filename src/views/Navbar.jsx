@@ -102,16 +102,16 @@ export const Navbar = () => {
   
           <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
             <li onClick={() => handleLinkClick('/user')}>
-              <img src={user && user.img} alt="user" className="h-16 w-16 rounded-full object-cover border-rose-400"  />
-            </li>
-            <li className='mr-4'>
-              <a onClick={() => handleLinkClick('/user')} >{user && user.firstName}</a>
-            </li>
-            <li>
-              <a onClick={() => handleLinkClick('/discover')} className='text-grey'>Discover</a>
+              <img src={user && user.img} alt="user" className="h-16 w-16 rounded-full object-cover border-2 border-rose-400"  />
             </li>
             <li >
-              <a onClick={logout} className='text-grey'>Log Out</a>
+              <a onClick={() => handleLinkClick('/user')} className='text-lg text-custom-orange font-bold'>{user && user.firstName}</a>
+            </li>
+            <li>
+              <a onClick={() => handleLinkClick('/discover')} className='text-white font-bold'>Discover</a>
+            </li>
+            <li >
+              <a onClick={logout} className='text-grey font-bold'>Log Out</a>
             </li>
           </ul>
         </nav>
