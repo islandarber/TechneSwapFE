@@ -1,16 +1,15 @@
 import React from 'react'
-import style from './Stylesheets/NavbarDiscover.module.css';
+import "./Stylesheets/NavbarDiscover.css"
 import { useAuth } from '../context/AuthContext';
 
 export const NavbarDiscover = () => {
 
-  const {setShowAll} = useAuth();
-
+  const {showAll, setShowAll} = useAuth();
 
   return (
-      <nav className={style.NavbarDiscover}>
-        <button onClick={() => setShowAll(true)} className={style.button}>Show All</button>
-        <button onClick={() => setShowAll(false)} className={style.button}>Show Matching</button>
+      <nav className="NavbarDiscover">
+        <button onClick={() => setShowAll(true)} className={showAll?"active" :"normalBtn"}>Show All</button>
+        <button onClick={() => setShowAll(false)} className={showAll?"normalBtn":"active"}>Show Matching</button>
       </nav>
       
   )

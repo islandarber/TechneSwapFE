@@ -6,23 +6,32 @@
   margin-top: 20px;
 }
 
-.NavbarDiscover button {
+.normalBtn {
   font-weight: bold;
-  color: #333333;
+  color: white;
   background-color: #ffb566;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
 }
 
-.NavbarDiscover button:Active {
+/* .NavbarDiscover button:Active {
   text-decoration: none;
   font-weight: bold;
   background-color: #fb9223;
-}
+} */
 
 .NavbarDiscover button:hover {
   text-decoration: none;
   font-weight: bold;
   background-color: #fb9223;
+}
+
+.active {
+  background-color: #fb9223;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: bold;
 }
