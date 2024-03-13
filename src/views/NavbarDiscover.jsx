@@ -9,5 +9,6 @@ export const NavbarDiscover = ({setShowAll}) => {
         <button onClick={() => setShowAll(true)} className={style.button}>Show All</button>
         <button onClick={() => setShowAll(false)} className={style.button}>Show Matching</button>
       </nav>
+      
   )
 }

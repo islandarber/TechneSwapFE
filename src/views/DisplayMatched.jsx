@@ -31,6 +31,8 @@ export const DisplayMatched = () => {
           },
         });
 
+        console.log('Matched Users data:', matchedresponse.data);
+
         const categorizedUsers = {};
 
         matchedresponse.data.forEach((matchedUser) => {
@@ -38,11 +40,20 @@ export const DisplayMatched = () => {
           const hasNeeds = matchedUser.needs.some((need) => user.skills.some((skill) => need.category === skill.category));
 
           if (hasSkills && hasNeeds) {
-            categorizedUsers.both = [matchedUser];
+            if (!categorizedUsers.hasOwnProperty('both')) {
+              categorizedUsers.both = [];
+            }
+            categorizedUsers.both.push(matchedUser);
           } else if (hasSkills) {
-            categorizedUsers.needs = [matchedUser];
+            if (!categorizedUsers.hasOwnProperty('skills')) {
+              categorizedUsers.skills = [];
+            }
+            categorizedUsers.skills.push(matchedUser);
           } else if (hasNeeds) {
-            categorizedUsers.skills = [matchedUser];
+            if (!categorizedUsers.hasOwnProperty('needs')) {
+              categorizedUsers.needs = [];
+            }
+            categorizedUsers.needs.push(matchedUser);
           }
         });
         console.log('Matched Users:', categorizedUsers);
@@ -78,20 +89,19 @@ export const DisplayMatched = () => {
       { hasMatches?
   // Render matches
       <div className='flex flex-col items-center gap-2 mt-5'>
-        <button className='bg-custom-blue rounded p-2 text-sm text-white' onClick={() => navigate('/user')}>Update your Profile</button>
         <h1 className="text-2xl text-center text-custom-blue font-bold mt-9 mb-4">Your matches:</h1>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5 m-7">
           {matchedUsers.both && matchedUsers.both.map((user, index) => (
             <div
               key={index}
-              className="bg-white p-4 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
+              className="bg-white p-4 md:p-4 shadow-xl rounded-md cursor-pointer hover:scale-105 transition duration-300"
               onClick={() => navigate(`/discover/${user._id}`)}
             >
               <div className="mb-4">
                 <img
                   src={user.img ? user.img : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"}
                   alt={user.name}
-                  className="w-full h-40 sm:h-40 md:h-16 lg:h-16 xl:h-12 object-cover rounded-md"
+                  className="w-full h-40 sm:h-40 md:h-28 lg:h-28 xl:h-28 object-cover rounded-md"
                 />
               </div>
                 <h2 className="text-xl font-bold text-custom-orange mb-2">{user.firstName}</h2>
@@ -126,7 +136,7 @@ export const DisplayMatched = () => {
                   : <p>No needs specified</p>}
                 </ul>
                 </div>
-                <p className="text-custom-purple text-sm mt-2">
+                <p className="bg-green-600 text-white rounded p-2 text-sm mt-2">
                   Matched your skills and needs!
                 </p>
               </div>
@@ -135,14 +145,14 @@ export const DisplayMatched = () => {
           {matchedUsers.skills && matchedUsers.skills.map((user, index) => (
             <div
               key={index}
-              className="bg-white p-4 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
+              className="bg-white p-4 md:p-4 shadow-xl rounded-md cursor-pointer hover:scale-105 transition duration-300"
               onClick={() => navigate(`/discover/${user._id}`)}
             >
               <div className="mb-4">
                 <img
                   src={user.img ? user.img : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"}
                   alt={user.name}
-                  className="w-full h-40 sm:h-40 md:h-16 lg:h-16 xl:h-12 object-cover rounded-md"
+                  className="w-full h-40 sm:h-40 md:h-28 lg:h-28 xl:h-28 object-cover rounded-md"
                 />
               </div>
                 <h2 className="text-xl font-bold text-custom-orange mb-2">{user.firstName}</h2>
@@ -178,7 +188,7 @@ export const DisplayMatched = () => {
                     ))}
                   </ul>
                 </div>
-                <p className="text-green-600 text-sm mt-2">
+                <p className="bg-custom-purple text-white text-sm mt-2 rounded p-2" >
                   Matched your Skills!
                 </p>
               </div>
@@ -187,14 +197,14 @@ export const DisplayMatched = () => {
           {matchedUsers.needs && matchedUsers.needs.map((user, index) => (
             <div
               key={index}
-              className="bg-white p-4 md:p-4 shadow-xl rounded-md cursor-pointer hover:shadow-lg transition duration-300"
+              className="bg-white p-4 md:p-4 shadow-xl rounded-md cursor-pointer hover:scale-105 transition duration-300"
               onClick={() => navigate(`/discover/${user._id}`)}
             >
               <div className="mb-4">
                 <img
                   src={user.img ? user.img : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"}
                   alt={user.name}
-                  className="w-full h-40 sm:h-40 md:h-16 lg:h-16 xl:h-12 object-cover rounded-md"
+                  className="w-full h-40 sm:h-40 md:h-28 lg:h-28 xl:h-28 object-cover rounded-md"
                 />
               </div>
                 <h2 className="text-xl font-bold text-custom-orange mb-2">{user.firstName}</h2>
@@ -231,7 +241,7 @@ export const DisplayMatched = () => {
                   : <p>No needs specified</p>}
                 </ul>
                 </div>
-                <p className="text-blue-600 text-sm mt-2">
+                <p className="bg-blue-600 text-white rounded text-sm mt-2 p-2">
                   Matched your Needs!
                 </p>
               </div>
@@ -242,6 +252,7 @@ export const DisplayMatched = () => {
       : <p className="text-center text-2xl text-custom-blue font-bold mt-9">Sorry, no matches for you 😞 </p>}
       {user.skills && user.skills.length === 0 && <p className="text-center text-xl text-custom-orange mt-9"> Please update your skills. </p>}
       {user.needs && user.needs.length === 0 && <p className="text-center text-xl text-custom-orange mt-9"> Please update your needs. </p>}
+      {(user.needs && user.needs.length === 0) || (user.skills && user.skills.length === 0) && <div className='flex justify-center mt-5 mb-5' ><button className='bg-custom-blue rounded p-2 text-sm text-white' onClick={() => navigate('/user')}>Update your Profile</button></div>}
       </>
       }
     </>

@@ -483,10 +483,10 @@ export const UserProfil = () => {
     ) : null}
 
     {isEditMode ? (
-      <button  className="w-1/3 mt-9 px-4 py-3 bg-custom-orange hover:bg-custom-blue-dark text-white rounded  mb-6" onClick={handleUpdateProfile}>Save Profile</button>
+      <button  className="mt-9 px-4 py-3 bg-custom-orange hover:bg-custom-blue-dark text-white rounded  mb-6" onClick={handleUpdateProfile}>Save Profile</button>
     ) : (
       
-      <button className="w-1/3 mt-8 mb-4 px-4 py-3 bg-custom-orange hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
+      <button className="mt-8 mb-4 px-4 py-3 bg-custom-orange hover:bg-custom-blue-dark text-white rounded" onClick={() => setIsEditMode(!isEditMode)}>Edit Profile</button>
     )}
     <Toaster
       position="bottom-center"

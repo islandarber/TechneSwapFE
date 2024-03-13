@@ -101,10 +101,8 @@ export const Navbar = () => {
           </section>
   
           <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
-  <li>
-    <img src={user && user.img} alt="user" onClick={() => handleLinkClick('/user')} className="hover:border-white h-16 w-16 rounded-full object-cover border-2 border-custom-orange cursor-pointer" />
-  </li>
-  <li>
+  <li className='flex gap-2 items-center justify-center'>
+    <img src={user && user.img} alt="user" onClick={() => handleLinkClick('/user')} className="h-16 w-16 rounded-full object-cover hover:scale-105 cursor-pointer" />
     <a onClick={() => handleLinkClick('/user')} className="text-xl text-white hover:text-gray-300 cursor-pointer"> {/* Add hover:bg-custom-orange-dark for the hover effect */}
       {user && user.firstName}
     </a>
@@ -115,8 +113,8 @@ export const Navbar = () => {
     </a>
   </li>
   <li>
-    <a onClick={logout} className="text-grey font-bold hover:text-gray-300 cursor-pointer"> {/* Add hover:text-gray-300 for the hover effect */}
-      Log Out
+    <a onClick={logout} className="text-custom-orange-light font-bold hover:text-gray-300 cursor-pointer"> {/* Add hover:text-gray-300 for the hover effect */}
+      Logout
     </a>
   </li>
 </ul>

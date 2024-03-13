@@ -57,8 +57,8 @@ export const OtherUserProfil = () => {
       </div> 
       : <section className="bg-blueGray-50">
         <button onClick={() => window.history.back()} className="bg-custom-orange text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 ml-2 mt-4">Back</button>
-        <div className="w-full flex justify-center lg:w-4/12 px-4 mx-auto mt-6"> {/* Adjusted mt-16 to mt-0 */}
-        <div className="relative flex flex-col self-center min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg md:w-3/4 lg:w-1/2 xl:w-1/3">
+        <div className="w-full flex justify-center px-4 mx-auto mt-6"> {/* Adjusted mt-16 to mt-0 */}
+        <div className="relative flex flex-col self-center min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg md:w-3/4 lg:w-3/4 xl:w-full">
             <div className="px-6 m-6">
               <div className="flex justify-center">
                 <div className="relative">
@@ -84,7 +84,7 @@ export const OtherUserProfil = () => {
                 </span>
               ) }
                 <div className="mb-2 text-blueGray-600 mt-2">
-                  <div className="w-full lg:w-9/12 px-4 mt-4">
+                  <div className="w-full px-4 mt-4">
                     <h3 className="text-lg font-bold leading-normal mb-2">
                       Needs:
                     </h3>
@@ -100,7 +100,7 @@ export const OtherUserProfil = () => {
                   </div>
                 </div>
                 <div className="mb-2 text-blueGray-600">
-                  <div className="w-full lg:w-9/12 px-4">
+                  <div className="w-full px-4">
                     <h3 className="text-lg font-bold leading-normal mb-2 mb-2">
                       Skills:
                     </h3>
