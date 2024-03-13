@@ -8,9 +8,9 @@ export default {
         'custom-grey': '#f5f5f5',
         'custom-purple': '#6a0572',
         'custom-orange': '#ff7f50',
+        'custom-orange-light': '#ffb566',
       },
     },
   },
   plugins: [],
 }
-
