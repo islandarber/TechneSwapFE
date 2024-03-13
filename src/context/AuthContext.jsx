@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (formData, setLoading, setError) => {
     setLoading(true);
+    setShowAll(true);
     console.log("im here inside login")
     const api_url = import.meta.env.VITE_BACKEND_URL;
     try {

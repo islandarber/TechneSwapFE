@@ -36,8 +36,16 @@ export const DisplayMatched = () => {
         const categorizedUsers = {};
 
         matchedresponse.data.forEach((matchedUser) => {
-          const hasSkills = matchedUser.skills.some((skill) => user.needs.some((need) => skill.category === need.category));
-          const hasNeeds = matchedUser.needs.some((need) => user.skills.some((skill) => need.category === skill.category));
+          // const hasSkills = matchedUser.needs.some((need) => user.skills.some((skill) => need.category === skill.category));
+          // const hasNeeds = matchedUser.skills.some((skill) => user.needs.some((need) => skill.category === need.category));
+
+            const hasSkills =matchedUser.needs.some((neededSkill) =>
+            user.skills.some((matchedSkill) => neededSkill._id === matchedSkill._id)
+          );
+            const hasNeeds = matchedUser.skills.some((matchedSkill) =>
+            user.needs.some((neededSkill) => matchedSkill._id === neededSkill._id)
+          );
+
 
           if (hasSkills && hasNeeds) {
             if (!categorizedUsers.hasOwnProperty('both')) {
@@ -127,7 +135,7 @@ export const DisplayMatched = () => {
                 </ul>
                 </div>
                 <div className="mt-4">
-                  <h3 className="text-m text-custom-blue font-bold mb-2">Needs</h3>
+                  <h3 className="text-m text-custom-blue font-bold mb-2">Needs:</h3>
                   <ul>
                   {user.needs && user.needs.length !== 0 ?
                     user.needs.map((need, index) => (
@@ -171,7 +179,7 @@ export const DisplayMatched = () => {
       
               <div className="mt-4">
                 <div>
-                  <h3 className="text-m text-custom-blue font-bold mb-2">Skills</h3>
+                  <h3 className="text-m text-custom-blue font-bold mb-2">Skills :</h3>
                   <ul>
                   {user.skills && user.skills.length !== 0?
                     user.skills.map((skill, index) => (
@@ -181,7 +189,7 @@ export const DisplayMatched = () => {
                 </ul>
                 </div>
                 <div className="mt-4">
-                  <h3 className="text-m text-custom-blue font-bold mb-2">Needs</h3>
+                  <h3 className="text-m text-custom-blue font-bold mb-2">Needs :</h3>
                   <ul>
                     {user.needs.map((need, index) => (
                       <li key={index}>{need.name}</li>
