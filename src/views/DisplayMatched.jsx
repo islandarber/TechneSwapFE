@@ -10,7 +10,7 @@ export const DisplayMatched = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { user, token } = useAuth();
+  const { user, token} = useAuth();
 
   console.log(matchedUsers);
 
@@ -252,7 +252,14 @@ export const DisplayMatched = () => {
       : <p className="text-center text-2xl text-custom-blue font-bold mt-9">Sorry, no matches for you 😞 </p>}
       {user.skills && user.skills.length === 0 && <p className="text-center text-xl text-custom-orange mt-9"> Please update your skills. </p>}
       {user.needs && user.needs.length === 0 && <p className="text-center text-xl text-custom-orange mt-9"> Please update your needs. </p>}
-      {(user.needs && user.needs.length === 0) || (user.skills && user.skills.length === 0) && <div className='flex justify-center mt-5 mb-5' ><button className='bg-custom-blue rounded p-2 text-sm text-white' onClick={() => navigate('/user')}>Update your Profile</button></div>}
+      {((user.needs && user.needs.length === 0) || (user.skills && user.skills.length === 0)) && (
+  <div className='flex justify-center mt-5 mb-5'>
+    <button className='bg-custom-blue rounded p-2 text-sm text-white' onClick={() => navigate('/user')}>
+      Update your Profile
+    </button>
+  </div>
+)}
+
       </>
       }
     </>

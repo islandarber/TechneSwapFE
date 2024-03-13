@@ -1,7 +1,10 @@
 import React from 'react'
 import style from './Stylesheets/NavbarDiscover.module.css';
+import { useAuth } from '../context/AuthContext';
 
-export const NavbarDiscover = ({setShowAll}) => {
+export const NavbarDiscover = () => {
+
+  const {setShowAll} = useAuth();
 
 
   return (
