@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 export const OtherUserProfil = () => {
   const [user, setUser] = useState({});
   const { id } = useParams();
-  const { token } = useAuth();
+  const { token, showAll, setShowAll } = useAuth();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const api_url = import.meta.env.VITE_BACKEND_URL; 
@@ -43,6 +43,9 @@ export const OtherUserProfil = () => {
     window.location.href = mailtoLink;
   };
 
+  const handleBack = () => {
+    window.history.back();
+  }
 
 
   return (
@@ -56,7 +59,7 @@ export const OtherUserProfil = () => {
       <span class="sr-only">Loading...</span>
       </div> 
       : <section className="bg-blueGray-50">
-        <button onClick={() => window.history.back()} className="bg-custom-orange text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 ml-2 mt-4">Back</button>
+        <button onClick={handleBack} className="bg-custom-orange text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 ml-2 mt-4">Back</button>
         <div className="w-full flex justify-center px-4 mx-auto mt-6"> {/* Adjusted mt-16 to mt-0 */}
         <div className="relative flex flex-col self-center min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg md:w-3/4 lg:w-3/4 xl:w-full">
             <div className="px-6 m-6">

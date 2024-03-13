@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("jwt") || null);
   const [user, setUser] = useState(null);
+  const [showAll, setShowAll] = useState(true);
 
 
   const login = async (formData, setLoading, setError) => {
@@ -105,7 +106,7 @@ export const AuthProvider = ({ children }) => {
   };
   
   return (
-    <AuthContext.Provider value={{user, token, login, logout, updateUser}}>
+    <AuthContext.Provider value={{user, token, login, logout, updateUser, showAll, setShowAll}}>
       {children}
     </AuthContext.Provider>
   );

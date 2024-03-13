@@ -10,12 +10,12 @@ import { useAuth } from '../context/AuthContext';
 
 
 export const Discover = () => {
-  const {user, token } = useAuth();
+  const {user, token, showAll, setShowAll } = useAuth();
 
   const navigate = useNavigate();
   const [allUsers, setAllUsers] = useState([]);
 
-  const [showAll, setShowAll] = useState(true);
+  
 
   const [loading, setLoading] = useState(false);
 
@@ -114,7 +114,7 @@ export const Discover = () => {
 
   return (
     <div>
-      <NavbarDiscover setShowAll={setShowAll}/>
+      <NavbarDiscover/>
       {showAll ? <>
         <div className={style.discoverViewAll}>
           <h1 className='mx-4'>Discover the world of TechneSwap!</h1>

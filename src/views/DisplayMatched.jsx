@@ -10,7 +10,7 @@ export const DisplayMatched = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { user, token } = useAuth();
+  const { user, token} = useAuth();
 
   console.log(matchedUsers);
 
