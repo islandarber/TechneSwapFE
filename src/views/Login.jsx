@@ -23,7 +23,8 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.length === 0){
+    console.log(formData);
+    if (formData.email === '' && formData.password === ''){
       setError({message: "Please provide email and password"})
       return;
     }
