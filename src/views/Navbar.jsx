@@ -72,7 +72,7 @@ export const Navbar = () => {
               <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center justify-between my-3">
                 <li className='mb-7'>
                   <div className='flex flex-col items-center'>
-                  {user.img ? (
+                  {user.img? (
                       <img
                         src={user.img}
                         alt={user.name}
@@ -81,7 +81,7 @@ export const Navbar = () => {
                       />
                     ) : (
                       <img
-                        src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+                        src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
                         alt="avatar"
                         className="h-16 w-16 rounded-full object-cover"
                         onClick={() => handleLinkClick('user')}
@@ -101,8 +101,18 @@ export const Navbar = () => {
           </section>
   
           <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
-  <li className='flex gap-2 items-center justify-center'>
-    <img src={user && user.img} alt="user" onClick={() => handleLinkClick('/user')} className="h-16 w-16 rounded-full object-cover hover:scale-105 cursor-pointer" />
+                    <li className='flex gap-2 items-center justify-center'>
+                    {user.img ? (
+                      <img src={user && user.img} alt="user" onClick={() => handleLinkClick('/user')} className="h-16 w-16 rounded-full object-cover hover:scale-105 cursor-pointer" />
+                    ) : (
+                      <img
+                        src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                        alt="avatar"
+                        className="h-16 w-16 rounded-full object-cover hover:scale-105 cursor-pointer"
+                        onClick={() => handleLinkClick('user')}
+                      />
+                    )}
+    
     <a onClick={() => handleLinkClick('/user')} className="text-xl text-white hover:text-gray-300 cursor-pointer"> {/* Add hover:bg-custom-orange-dark for the hover effect */}
       {user && user.firstName}
     </a>

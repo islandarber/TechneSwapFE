@@ -24,8 +24,11 @@ export const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.length === 0) {
+    if (formData.firstName === '' || formData.lastName === '' || formData.email === '' || formData.password === '' || formData.password2 === '') {
       setError({ message: "Please fill in all the required fields" })
+      setTimeout(() => {
+        setError('')
+      }, 3000);
       return;
     }
       if (formData.password === formData.password2) {
@@ -62,7 +65,6 @@ export const Register = () => {
   return (
     <div className={style.signupPage}>
       <h1>Create an account with us:</h1>
-      {error && <p className={style.errormessage}>{error && error}</p>}
       <form className={style.signupForm} onSubmit={handleSubmit}>
         <label htmlFor="firstName">First Name:</label>
         <input type="text" name="firstName" onChange={(e)=>handleChange(e)} />
@@ -81,6 +83,7 @@ export const Register = () => {
         </label>
         <input type="password" name="password2" onChange={(e)=>handleChange(e)} />
         <button type="submit">Sign me up</button>
+        {error && <p className={style.errormessage}>{error && error.message}</p>}
 
       </form>
 
