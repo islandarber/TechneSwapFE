@@ -97,7 +97,7 @@ export const DisplayMatched = () => {
       { hasMatches?
   // Render matches
       <div className='flex flex-col items-center gap-2 mt-5'>
-        <h1 className="text-2xl text-center text-custom-blue font-bold mt-9 mb-4">Your matches:</h1>
+        <h1 className="text-2xl text-center text-custom-blue font-bold mt-9 mb-4">{Object.keys(user).length ? user.firstName : null }, here are your matches:</h1>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5 m-12">
           {matchedUsers.both && matchedUsers.both.map((user, index) => (
             <div
