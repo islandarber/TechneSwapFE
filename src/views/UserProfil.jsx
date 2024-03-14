@@ -341,7 +341,7 @@ export const UserProfil = () => {
                 {userData.location}
               </span></p>
             <p className='mb-2 text-custom-blue-dark text-base'>{userData.email}</p>
-            <p className='mb-2 text-center text-custom-blue-dark m-6 text-base italic'>Your description : <br />{userData.description}</p>
+            <p className='mb-2 w-1/2 text-center text-custom-blue-dark m-6 text-base italic'>Your description : <br />{userData.description}</p>
           </div>
 
           )}
